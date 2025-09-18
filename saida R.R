@@ -1,3 +1,4 @@
+#Script final ajustado
 # Carregar pacotes
 library(readr)
 library(dplyr)
@@ -26,3 +27,4 @@ estatisticas <- numericos %>%
   )
 
 print(estatisticas)
+
