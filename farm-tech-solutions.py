@@ -4,7 +4,7 @@
 - Dados em vetores (listas)
 - Menu com entrada/saída/atualização/deleção/sair
 - Uso de loops e decisões
-- Exportação para CSV (para uso no R)
+- Exportação para CSV (para uso no local-tests)
 '''
 import csv
 import math

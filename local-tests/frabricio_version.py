@@ -20,7 +20,7 @@ from typing import List, Dict, Any, Optional
 # ------------------------------------------------------------
 # Config e Paths
 # ------------------------------------------------------------
-BASE = Path(".").resolve()
+BASE = Path("..").resolve()
 DATA = BASE / "data"
 DOCS = BASE / "docs"
 for p in (DATA, DOCS):
