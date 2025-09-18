@@ -1,0 +1,3 @@
+id,cultura,geometria,largura_m,comprimento_m,raio_m,area_m2,area_ha,created_at
+1,Açaí,retangulo,20.0,40.0,,800.0,0.08,2025-09-17
+1,Soja,circulo,,,50.0,7853.98,0.7854,2025-09-17
