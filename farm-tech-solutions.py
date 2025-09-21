@@ -11,12 +11,14 @@ import math
 import pathlib
 from datetime import date
 from typing import List, Dict, Optional
+from seeds import cadastrar_dados_teste
 
 
 # =========================
 # "Banco de dados" em memória (vetores/listas)
 # =========================
 def next_id(v: List[Dict]) -> int:
+    print(v)
     return (v[-1]["id"] + 1) if v else 1
 
 CULTURA_ACAI = "Açaí"
@@ -66,49 +68,90 @@ def calc_manejo(taxa_ml_por_m: float, num_ruas: int, comprimento_m: float) -> Di
         "litros_totais": round(litros_totais, 3),
     }
 
-
-# =========================
-# Camada interativa (lê input, usa funções puras)
-# =========================
-def cadastra_areas():
-    print("\n== Cadastro de Área ==")
-    print("[1] Açaí (retângulo)  |  [2] Soja (círculo)")
-    user_option = input("Escolha a cultura (1/2): ").strip()
+def prompt_inline_item() -> Dict:
+    print("\n== Cadastro de Talhão + Manejo ==")
+    print("Selecione uma das opções: [1] Açaí  |  [2] Soja")
+    user_option = input("Cultura (1/2): ").strip()
 
     if user_option == "1":
         cultura = CULTURA_ACAI
         largura = read_float("Largura (m): ")
         comprimento = read_float("Comprimento (m): ")
         resultado_total = calcula_area_retangulo(largura, comprimento)
-        registro_total = {
-            "id": next_id(v_areas),
+        produto = input("Produto (ex.: Fosfato): ").strip() or " "
+        taxa = read_float("Taxa (mL por metro): ")
+        ruas = read_int("Número de ruas: ")
+
+        resultado_calc_manejo = calc_manejo(taxa, ruas, comprimento)
+        return {
+            # id será definido FORA (no criar ou atualizar)
             "cultura": cultura,
             "geometria": "retangulo",
             "largura_m": largura,
             "comprimento_m": comprimento,
             "raio_m": None,
             "area_m2": resultado_total["area_m2"],
-            "area_ha": resultado_total["area_ha"],
+            "area_ha": resultado_total["area_ha"],        # (bom ter)
             "created_at": date.today().isoformat(),
+            "produto": produto,
+            "taxa_ml_por_m": taxa,
+            "num_ruas": ruas,
+            "comprimento_m": comprimento,                 # manter explícito
+            "total_metros": resultado_calc_manejo["total_metros"],
+            "total_ml": resultado_calc_manejo["total_ml"],
+            "litros_totais": resultado_calc_manejo["litros_totais"],
+            "data_aplicacao": date.today().isoformat(),
+            "equipamento": "",
+            "observacoes": "",
         }
-        v_areas.append(registro_total)
 
     elif user_option == "2":
         cultura = CULTURA_SOJA
         raio = read_float("Raio (m): ")
         resultado_total = calcula_area_circulo(raio)
-        registro_total = {
-            "id": next_id(v_applications),
+        produto = input("Produto (ex.: Fosfato): ").strip() or " "
+        taxa = read_float("Taxa (mL por metro): ")
+        ruas = read_int("Número de ruas: ")
+        comprimento = read_float("Comprimento de cada rua (m): ")  # melhor pedir explicitamente
+
+        resultado_calc_manejo = calc_manejo(taxa, ruas, comprimento)
+        return {
             "cultura": cultura,
             "geometria": "circulo",
             "largura_m": None,
-            "comprimento_m": None,
+            "comprimento_m": comprimento,                 # comprimento do manejo
             "raio_m": raio,
             "area_m2": resultado_total["area_m2"],
             "area_ha": resultado_total["area_ha"],
             "created_at": date.today().isoformat(),
+            "produto": produto,
+            "taxa_ml_por_m": taxa,
+            "num_ruas": ruas,
+            "total_metros": resultado_calc_manejo["total_metros"],
+            "total_ml": resultado_calc_manejo["total_ml"],
+            "litros_totais": resultado_calc_manejo["litros_totais"],
+            "data_aplicacao": date.today().isoformat(),
+            "equipamento": "",
+            "observacoes": "",
         }
+    else:
+        print("Opção inválida.")
+        return {}
+
+
+def cadastra_areas_manejos():
+    print("\n== Cadastro de Manejo de Insumos ==")
+    print("Selecione uma das opções: [1] Açaí  |  [2] Soja")
+    user_option = input("Cultura (1/2): ").strip()
+
+    if user_option == "1":
+        registro_total = prompt_inline_item()
         v_areas.append(registro_total)
+
+    elif user_option == "2":
+        registro_total = prompt_inline_item()
+        v_areas.append(registro_total)
+
     else:
         print("Opção inválida. Não existe essa opção para cadastro de areas.")
         return
@@ -116,43 +159,66 @@ def cadastra_areas():
     print("✅ Área cadastrada!")
     print(v_areas[-1])
 
+def localizar_index_por_id(lista: List[Dict], _id: int) -> Optional[int]:
+    for i, r in enumerate(lista):
+        if r.get("id") == _id:
+            return i
+    return None
 
-# =========================
-# Cadastro do manejo de insumos
-# =========================
-def cadastra_manejo():
-    print("\n== Cadastro de Manejo de Insumos ==")
-    print("Selecione uma das opções: [1] Açaí  |  [2] Soja")
-    user_option = input("Cultura (1/2): ").strip()
-    cultura = "Açaí" if user_option == "1" else "Soja" if user_option == "2" else None
-    if not cultura:
-        print("Opção inválida.")
+def remover_item():
+    if not v_areas:
+        print("Não há registros para remover.")
         return
 
+    print("\n== Remover item ==")
+    try:
+        _id = read_int("Informe o ID do talhão a remover: ")
+    except Exception:
+        print("ID inválido.")
+        return
 
-    produto = input("Produto (ex.: Fosfato): ").strip() or "Produto"
-    taxa = read_float("Taxa (mL por metro): ")
-    ruas = read_int("Número de ruas: ")
-    comp = read_float("Comprimento de cada rua (m): ")
+    idx = localizar_index_por_id(v_areas, _id)
+    if idx is None:
+        print("ID não encontrado.")
+        return
 
-    resultado_calc_manejo = calc_manejo(taxa, ruas, comp)
-    registro_total = {
-        "id": next_id(v_areas),
-        "cultura": cultura,
-        "produto": produto,
-        "taxa_ml_por_m": taxa,
-        "num_ruas": ruas,
-        "comprimento_m": comp,
-        "total_metros": resultado_calc_manejo["total_metros"],
-        "total_ml": resultado_calc_manejo["total_ml"],
-        "litros_totais": resultado_calc_manejo["litros_totais"],
-        "data_aplicacao": date.today().isoformat(),
-        "equipamento": "",
-        "observacoes": "",
-    }
-    v_applications.append(registro_total)
-    print("✅ Manejo registrado!")
-    print(v_applications[-1])
+    print("Registro selecionado:")
+    print(v_areas[idx])
+
+    confirma = input("Tem certeza que deseja remover? (s/N): ").strip().lower()
+    if confirma != "s":
+        print("Remoção cancelada.")
+        return
+
+    removido = v_areas.pop(idx)
+    print("🗑️  Removido com sucesso:")
+    print(removido)
+
+def atualizar_por_recadastro():
+    if not v_areas:
+        print("Não há registros para atualizar.")
+        return
+
+    print("\n== Atualizar (apagar e recadastrar) ==")
+    _id = read_int("Informe o ID: ")
+    idx = localizar_index_por_id(v_areas, _id)
+    if idx is None:
+        print("ID não encontrado.")
+        return
+
+    antigo = v_areas.pop(idx)                    # remove o antigo
+    print("↩️ Agora recadastre o item (os dados antigos foram removidos).")
+    novo = prompt_inline_item()                  # recria via prompts
+    if not novo:
+        print("Cancelado. Restaurando item antigo.")
+        v_areas.insert(idx, antigo)              # volta o antigo se cancelou
+        return
+
+    novo["id"] = _id                             # preserva o mesmo ID
+    v_areas.insert(idx, novo)                    # volta no MESMO índice
+    print("✅ Item atualizado!")
+    print(v_areas[idx])
+
 
 def listar():
     print("\n== Áreas ==")
@@ -162,17 +228,18 @@ def listar():
         for f in v_areas:
             print(f)
 
-    print("\n== Manejos ==")
-    if not v_applications:
-        print("(vazio)")
-    else:
-        for a in v_applications:
-            print(a)
+    # print("\n== Manejos ==")
+    # if not v_applications:
+    #     print("(vazio)")
+    # else:
+    #     for a in v_applications:
+    #         print(a)
 
 def exportar_csv(dirpath: str = "python"):
     p = pathlib.Path(dirpath)
     p.mkdir(parents=True, exist_ok=True)
 
+    # --- ÁREAS (fields.csv) ---
     cols_fields = [
         "id","cultura","geometria","largura_m","comprimento_m","raio_m",
         "area_m2","area_ha","created_at"
@@ -181,37 +248,72 @@ def exportar_csv(dirpath: str = "python"):
         w = csv.DictWriter(f, fieldnames=cols_fields)
         w.writeheader()
         for r in v_areas:
-            w.writerow(r)
+            w.writerow({k: r.get(k) for k in cols_fields})  # <-- pega só as colunas declaradas
 
+    # --- MANEJOS (applications.csv) ---
+    # Vamos "achatar" os dados de manejo a partir do próprio v_areas,
+    # assumindo 1 manejo por talhão no seu fluxo atual.
     cols_apps = [
-        "id","cultura","produto","taxa_ml_por_m","num_ruas","comprimento_m",
+        "id","talhao_id","cultura","produto","taxa_ml_por_m","num_ruas","comprimento_m",
         "total_metros","total_ml","litros_totais","data_aplicacao","equipamento","observacoes"
     ]
     with open(p / "applications.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols_apps)
         w.writeheader()
-        for r in v_applications:
-            w.writerow(r)
+        for t in v_areas:
+            # Se houver manejo (produto preenchido), exporta uma linha
+            if t.get("produto"):
+                row = {
+                    "id": 1,  # se quiser vários manejos por talhão no futuro, incremente aqui
+                    "talhao_id": t["id"],
+                    "cultura": t["cultura"],
+                    "produto": t.get("produto", ""),
+                    "taxa_ml_por_m": t.get("taxa_ml_por_m", ""),
+                    "num_ruas": t.get("num_ruas", ""),
+                    "comprimento_m": t.get("comprimento_m", ""),
+                    "total_metros": t.get("total_metros", ""),
+                    "total_ml": t.get("total_ml", ""),
+                    "litros_totais": t.get("litros_totais", ""),
+                    "data_aplicacao": t.get("data_aplicacao", ""),
+                    "equipamento": t.get("equipamento", ""),
+                    "observacoes": t.get("observacoes", ""),
+                }
+                w.writerow(row)
 
     print(f"💾 CSVs exportados em {p}/")
+
 
 def menu_inicial():
     while True:
         print("\n=== Menu ===")
-        print("[1] Cadastrar área")
-        print("[2] Cadastrar manejo")
-        print("[3] Listar")
-        print("[4] Exportar CSV")
+        print("[1] Cadastrar área e manejo")
+        print("[2] Listar")
+        print("[3] Alterar item cadastrado")
+        print("[4] Remover item cadastrado")
+        print("[5] Exportar CSV")
+        print("[9] Cadastrar dados teste")
         print("[0] Sair")
         user_option = input("Escolha uma das opções: ")
         if user_option == "1":
-            cadastra_areas()
+            cadastra_areas_manejos()
         elif user_option == "2":
-            cadastra_manejo()
-        elif user_option == "3":
             listar()
+        elif user_option == "3":
+            atualizar_por_recadastro()
         elif user_option == "4":
+            remover_item()
+        elif user_option == "5":
             exportar_csv()
+        elif user_option == "9":
+            cadastrar_dados_teste(
+                v_areas=v_areas,
+                next_id=next_id,
+                calcula_area_retangulo=calcula_area_retangulo,
+                calcula_area_circulo=calcula_area_circulo,
+                calc_manejo=calc_manejo,
+                CULTURA_ACAI=CULTURA_ACAI,
+                CULTURA_SOJA=CULTURA_SOJA,
+            )
         elif user_option == "0":
             print("Até mais! 🌱")
             break
