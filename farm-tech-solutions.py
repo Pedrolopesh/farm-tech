@@ -24,7 +24,7 @@ def next_id(v: List[Dict]) -> int:
 CULTURA_ACAI = "Açaí"
 CULTURA_SOJA = "Soja"
 
-v_areas: List[Dict] = []
+lista_de_areas: List[Dict] = []
 v_applications: List[Dict] = []
 
 
@@ -47,117 +47,92 @@ def read_int(prompt: str) -> int:
         except ValueError:
             print("Inteiro inválido. Tente novamente.")
 
+def read_culture(prompt: str) -> int:
+    while True:
+        cultura = input(prompt).strip()
+        try:
+            cultura_int = int(cultura)
+            if cultura_int <= 0 or cultura_int > 2:
+                raise ValueError
+            return cultura_int
+        except ValueError:
+            print("Inteiro inválido. Digite um número entre 1 e 2.")
+
 # =========================
 # Funções puras de cálculo
 # =========================
-def calcula_area_retangulo(largura_m: float, comprimento_m: float) -> Dict[str, float]:
-    area_m2 = largura_m * comprimento_m
-    return {"area_m2": round(area_m2, 2), "area_ha": round(area_m2 / 10_000, 4)}
-
-def calcula_area_circulo(raio: float) -> Dict[str, float]:
-    area_m2_circulo = math.pi * (raio**2)
-    return {"area_m2": round(area_m2_circulo, 2), "area_ha": round(area_m2_circulo / 10_000, 4)}
+def calcula_area_geometrica(altura_m: float, comprimento_m: float) -> float:
+    area_m2 = altura_m * comprimento_m
+    return round(area_m2, 2)
 
 def calc_manejo(taxa_ml_por_m: float, num_ruas: int, comprimento_m: float) -> Dict[str, float]:
     total_metros = num_ruas * comprimento_m
     total_ml = taxa_ml_por_m * total_metros
     litros_totais = total_ml / 1000.0
+
+    # Esse calculo é para saber a quantidade total de metros para aplicar os produtos na rua
+    # 3 ruas e comprimento de 10m -> total 30m que vai ser aplicado os produtos, sendo cada rua com 10m (a rua sempre terá o mesmo comprimento da figura geométrica)
     return {
-        "total_metros": round(total_metros, 2),
-        "total_ml": round(total_ml, 2),
-        "litros_totais": round(litros_totais, 3),
+        "total_metros_ruas": round(total_metros, 2),
+        "total_ml_sera_utilizado": round(total_ml, 2),
+        "litros_totais_sera_utilizado": round(litros_totais, 3),
     }
 
-def prompt_inline_item() -> Dict:
-    print("\n== Cadastro de Talhão + Manejo ==")
-    print("Selecione uma das opções: [1] Açaí  |  [2] Soja")
-    user_option = input("Cultura (1/2): ").strip()
-
-    if user_option == "1":
-        cultura = CULTURA_ACAI
-        largura = read_float("Largura (m): ")
-        comprimento = read_float("Comprimento (m): ")
-        resultado_total = calcula_area_retangulo(largura, comprimento)
-        produto = input("Produto (ex.: Fosfato): ").strip() or " "
-        taxa = read_float("Taxa (mL por metro): ")
-        ruas = read_int("Número de ruas: ")
-
-        resultado_calc_manejo = calc_manejo(taxa, ruas, comprimento)
-        return {
+def resposta_calc_culturas(dadosQueVemDoPrompt: Dict) -> Dict:
+    return {
             # id será definido FORA (no criar ou atualizar)
-            "cultura": cultura,
-            "geometria": "retangulo",
-            "largura_m": largura,
-            "comprimento_m": comprimento,
-            "raio_m": None,
-            "area_m2": resultado_total["area_m2"],
-            "area_ha": resultado_total["area_ha"],        # (bom ter)
+            "cultura": dadosQueVemDoPrompt["cultura"],
+            "geometria": dadosQueVemDoPrompt["geometria"],
+            "altura_m": dadosQueVemDoPrompt["altura"],
+            "comprimento_m": dadosQueVemDoPrompt["comprimento"],
+            "area_m2": dadosQueVemDoPrompt["area_m2"],
             "created_at": date.today().isoformat(),
-            "produto": produto,
-            "taxa_ml_por_m": taxa,
-            "num_ruas": ruas,
-            "comprimento_m": comprimento,                 # manter explícito
-            "total_metros": resultado_calc_manejo["total_metros"],
-            "total_ml": resultado_calc_manejo["total_ml"],
-            "litros_totais": resultado_calc_manejo["litros_totais"],
+            "produto": dadosQueVemDoPrompt["produto"],
+            "taxa_ml_por_m": dadosQueVemDoPrompt["taxa"],
+            "num_ruas": dadosQueVemDoPrompt["num_ruas"],
+            "total_metros_ruas": dadosQueVemDoPrompt["resultado_calc_manejo"]["total_metros_ruas"],
+            "total_ml_sera_utilizado": dadosQueVemDoPrompt["resultado_calc_manejo"]["total_ml_sera_utilizado"],
+            "litros_totais_sera_utilizado": dadosQueVemDoPrompt["resultado_calc_manejo"]["litros_totais_sera_utilizado"],
             "data_aplicacao": date.today().isoformat(),
-            "equipamento": "",
-            "observacoes": "",
         }
 
-    elif user_option == "2":
-        cultura = CULTURA_SOJA
-        raio = read_float("Raio (m): ")
-        resultado_total = calcula_area_circulo(raio)
-        produto = input("Produto (ex.: Fosfato): ").strip() or " "
-        taxa = read_float("Taxa (mL por metro): ")
-        ruas = read_int("Número de ruas: ")
-        comprimento = read_float("Comprimento de cada rua (m): ")  # melhor pedir explicitamente
+def prompt_inline_item() -> Dict:
+    print("\n== Cadastro de Manejo de Insumos. ==")
+    print("\n== Nesta etapa você coloca as informações do seu terreno e produtos que vai utilizar para fazer a aplicação. ==")
+    print("Selecione uma das opções: [1] Açaí  |  [2] Soja")
+    user_option = read_culture("Cultura (1/2): ")
 
-        resultado_calc_manejo = calc_manejo(taxa, ruas, comprimento)
-        return {
-            "cultura": cultura,
-            "geometria": "circulo",
-            "largura_m": None,
-            "comprimento_m": comprimento,                 # comprimento do manejo
-            "raio_m": raio,
-            "area_m2": resultado_total["area_m2"],
-            "area_ha": resultado_total["area_ha"],
-            "created_at": date.today().isoformat(),
-            "produto": produto,
-            "taxa_ml_por_m": taxa,
-            "num_ruas": ruas,
-            "total_metros": resultado_calc_manejo["total_metros"],
-            "total_ml": resultado_calc_manejo["total_ml"],
-            "litros_totais": resultado_calc_manejo["litros_totais"],
-            "data_aplicacao": date.today().isoformat(),
-            "equipamento": "",
-            "observacoes": "",
-        }
-    else:
-        print("Opção inválida.")
-        return {}
+    cultura = CULTURA_ACAI if user_option == "1" else CULTURA_SOJA
+    altura = read_float("Largura ou altura (m): ")
+    comprimento = read_float("Comprimento ou base (m): ")
+    resultado_total_m2 = calcula_area_geometrica(altura, comprimento)
+    produto = input("Produto (ex.: Fosfato): ").strip() or " "
+    taxa = read_float("Taxa (mL por metro): ")
+    num_ruas = read_int("Número de ruas: ")
+
+    resultado_calc_manejo = calc_manejo(taxa, num_ruas, comprimento)
+
+    dadosQueVemDoPrompt = {
+        "cultura": cultura,
+        "geometria": "Retangulo" if user_option == "1" else "Paralelogramo",
+        "altura": altura,
+        "comprimento": comprimento,
+        "area_m2": resultado_total_m2,
+        "produto": produto,
+        "taxa": taxa,
+        "num_ruas": num_ruas,
+        "resultado_calc_manejo": resultado_calc_manejo,
+    }
+
+    return resposta_calc_culturas(dadosQueVemDoPrompt)
 
 
 def cadastra_areas_manejos():
-    print("\n== Cadastro de Manejo de Insumos ==")
-    print("Selecione uma das opções: [1] Açaí  |  [2] Soja")
-    user_option = input("Cultura (1/2): ").strip()
-
-    if user_option == "1":
-        registro_total = prompt_inline_item()
-        v_areas.append(registro_total)
-
-    elif user_option == "2":
-        registro_total = prompt_inline_item()
-        v_areas.append(registro_total)
-
-    else:
-        print("Opção inválida. Não existe essa opção para cadastro de areas.")
-        return
+    registro_total = prompt_inline_item()
+    lista_de_areas.append(registro_total)
 
     print("✅ Área cadastrada!")
-    print(v_areas[-1])
+    print(lista_de_areas[-1])
 
 def localizar_index_por_id(lista: List[Dict], _id: int) -> Optional[int]:
     for i, r in enumerate(lista):
@@ -166,7 +141,7 @@ def localizar_index_por_id(lista: List[Dict], _id: int) -> Optional[int]:
     return None
 
 def remover_item():
-    if not v_areas:
+    if not lista_de_areas:
         print("Não há registros para remover.")
         return
 
@@ -177,63 +152,56 @@ def remover_item():
         print("ID inválido.")
         return
 
-    idx = localizar_index_por_id(v_areas, _id)
+    idx = localizar_index_por_id(lista_de_areas, _id)
     if idx is None:
         print("ID não encontrado.")
         return
 
     print("Registro selecionado:")
-    print(v_areas[idx])
+    print(lista_de_areas[idx])
 
     confirma = input("Tem certeza que deseja remover? (s/N): ").strip().lower()
     if confirma != "s":
         print("Remoção cancelada.")
         return
 
-    removido = v_areas.pop(idx)
+    removido = lista_de_areas.pop(idx)
     print("🗑️  Removido com sucesso:")
     print(removido)
 
 def atualizar_por_recadastro():
-    if not v_areas:
+    if not lista_de_areas:
         print("Não há registros para atualizar.")
         return
 
     print("\n== Atualizar (apagar e recadastrar) ==")
     _id = read_int("Informe o ID: ")
-    idx = localizar_index_por_id(v_areas, _id)
+    idx = localizar_index_por_id(lista_de_areas, _id)
     if idx is None:
         print("ID não encontrado.")
         return
 
-    antigo = v_areas.pop(idx)                    # remove o antigo
+    antigo = lista_de_areas.pop(idx)                    # remove o antigo
     print("↩️ Agora recadastre o item (os dados antigos foram removidos).")
     novo = prompt_inline_item()                  # recria via prompts
     if not novo:
         print("Cancelado. Restaurando item antigo.")
-        v_areas.insert(idx, antigo)              # volta o antigo se cancelou
+        lista_de_areas.insert(idx, antigo)              # volta o antigo se cancelou
         return
 
     novo["id"] = _id                             # preserva o mesmo ID
-    v_areas.insert(idx, novo)                    # volta no MESMO índice
+    lista_de_areas.insert(idx, novo)                    # volta no MESMO índice
     print("✅ Item atualizado!")
-    print(v_areas[idx])
+    print(lista_de_areas[idx])
 
 
 def listar():
     print("\n== Áreas ==")
-    if not v_areas:
+    if not lista_de_areas:
         print("(vazio)")
     else:
-        for f in v_areas:
+        for f in lista_de_areas:
             print(f)
-
-    # print("\n== Manejos ==")
-    # if not v_applications:
-    #     print("(vazio)")
-    # else:
-    #     for a in v_applications:
-    #         print(a)
 
 def exportar_csv(dirpath: str = "python"):
     p = pathlib.Path(dirpath)
@@ -247,11 +215,11 @@ def exportar_csv(dirpath: str = "python"):
     with open(p / "fields.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols_fields)
         w.writeheader()
-        for r in v_areas:
+        for r in lista_de_areas:
             w.writerow({k: r.get(k) for k in cols_fields})  # <-- pega só as colunas declaradas
 
     # --- MANEJOS (applications.csv) ---
-    # Vamos "achatar" os dados de manejo a partir do próprio v_areas,
+    # Vamos "achatar" os dados de manejo a partir do próprio lista_de_areas,
     # assumindo 1 manejo por talhão no seu fluxo atual.
     cols_apps = [
         "id","talhao_id","cultura","produto","taxa_ml_por_m","num_ruas","comprimento_m",
@@ -260,7 +228,7 @@ def exportar_csv(dirpath: str = "python"):
     with open(p / "applications.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols_apps)
         w.writeheader()
-        for t in v_areas:
+        for t in lista_de_areas:
             # Se houver manejo (produto preenchido), exporta uma linha
             if t.get("produto"):
                 row = {
@@ -306,10 +274,9 @@ def menu_inicial():
             exportar_csv()
         elif user_option == "9":
             cadastrar_dados_teste(
-                v_areas=v_areas,
+                lista_de_areas=lista_de_areas,
                 next_id=next_id,
-                calcula_area_retangulo=calcula_area_retangulo,
-                calcula_area_circulo=calcula_area_circulo,
+                calcula_area_geometrica=calcula_area_geometrica,
                 calc_manejo=calc_manejo,
                 CULTURA_ACAI=CULTURA_ACAI,
                 CULTURA_SOJA=CULTURA_SOJA,
