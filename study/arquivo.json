@@ -1,0 +1,12 @@
+{
+    "pet1": {
+        "tipo": "Cachorro",
+        "nome": "Bob",
+        "idade": 12
+    },
+    "pet2": {
+        "tipo": "Gato",
+        "nome": "Lua",
+        "idade": 2
+    }
+}
