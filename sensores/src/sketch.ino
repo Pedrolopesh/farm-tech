@@ -1,3 +1,4 @@
+#include <Arduino.h>
 // Inclusão da biblioteca para o sensor DHT
 #include "DHT.h"
 
