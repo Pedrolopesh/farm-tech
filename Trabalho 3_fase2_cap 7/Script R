@@ -1,10 +1,11 @@
 # LARISSA NUNES MOREIRA REIS_RM568280_fase2_cap7
 # PEDRO HENRIQUE LOPES DOS SANTOS_RM568359_fase2_cap7
+# ENZO NUNES CASTANHEIRA GLORIA DA SILVA_RM567599_fase2_cap7
 # FABRICIO MOUZER BRITO_RM566777_fase2_cap7
 # GABRIEL RAPOZO GUIMARÃES SOARES_RM568480_fase2_cap7
 
 # Instalar e carregar pacotes necessários
-install.packages(c( "ggplot2", "modeest", "scales"))
+install.packages(c( "ggplot2", "modeest", "scales","readxl","dplyr","writexl"))
 library(readxl)
 library(dplyr)
 library(ggplot2)
@@ -16,18 +17,19 @@ library(writexl)
 setwd("C:/Users/laris/OneDrive/Área de Trabalho/cap7")
 dados <- read_excel("dados_soja_acai.xlsx")
 
-# Visualizar as primeiras linhas
+# 1.1. Visualizar as primeiras linhas
 head(dados)
 
-# 2. Medidas de Tendência Central (utilizando numero de talhoes)----------------------------------------
-
+# 2. Medidas de Tendência Central (utilizando número de talhoes)----------------------------------------
+# Média , Mediana e Moda
 media <- mean(dados$N_talhoes)
 mediana <- median(dados$N_talhoes)
 moda <- mfv(dados$N_talhoes)   # moda (usando pacote modeest)
 
 cat("Média:", media, "\nMediana:", mediana, "\nModa:", moda, "\n")
 
-# 3. Medidas de Dispersão (utilizando numero de talhoes)-----------------------------------------------
+# 3. Medidas de Dispersão (utilizando número de talhoes)-----------------------------------------------
+# Variância, Desvio padrão, amplitude e coeficiente de variância
 
 variancia <- var(dados$N_talhoes)
 desvio_padrao <- sd(dados$N_talhoes)
@@ -37,15 +39,15 @@ coef_var <- (desvio_padrao / media) * 100
 cat("Variância:", variancia, "\nDesvio Padrão:", desvio_padrao,
     "\nAmplitude:", amplitude, "\nCoeficiente de Variação (%):", coef_var, "\n")
 
-# 4. Medidas Separatrizes (utilizando numero de talhoes)-----------------------------------------------
+# 4. Medidas Separatrizes (utilizando número de talhoes)-----------------------------------------------
 
-# Quartis
+# 4.1. Quartis
 quartis <- quantile(dados$N_talhoes, probs = c(0.25, 0.5, 0.75))
 
-# Decis
+# 4.2. Decis
 decis <- quantile(dados$N_talhoes, probs = seq(0.1, 0.9, by = 0.1))
 
-# Percentis (exemplo: 10º, 25º, 50º, 75º, 90º)
+# 4.3. Percentis (exemplo: 10º, 25º, 50º, 75º, 90º)
 percentis <- quantile(dados$N_talhoes, probs = c(0.1, 0.25, 0.5, 0.75, 0.9))
 
 cat("Quartis:\n"); print(quartis)
@@ -54,7 +56,7 @@ cat("Percentis:\n"); print(percentis)
 
 #5. Exportar tabelas resumidas para Excel
 
-# Medidas de tendência e dispersão
+# 5.1. Medidas de tendência e dispersão
 resumo <- data.frame(
   Medida = c("Média", "Mediana", "Moda", "Variância", "Desvio Padrão",
              "Amplitude", "Coeficiente de Variação (%)"),
@@ -63,7 +65,7 @@ resumo <- data.frame(
 )
 write_xlsx(resumo, "analise_tendencia_dispersao.xlsx")
 
-# Medidas separatrizes
+# 5.2. Medidas separatrizes
 separatrizes <- data.frame(
   Tipo = c(rep("Quartil", 3), rep("Decil", 9), rep("Percentil", 5)),
   Ponto = c(names(quartis), names(decis), names(percentis)),
@@ -74,7 +76,7 @@ write_xlsx(separatrizes, "analise_separatrizes.xlsx")
 
 # 6. Análise Gráfica (utilizando numero de talhoes)----------------------------------------------------
 
-# Histograma
+# 6.1. Histograma
 grafico_hist <- ggplot(dados, aes(x = N_talhoes, fill = Cultivo)) +
   geom_histogram(binwidth = 1, color = "black", alpha = 0.7, position = "dodge") +
   labs(title = "Distribuição do Número de Talhões por Tipo de Cultivo",
@@ -82,7 +84,7 @@ grafico_hist <- ggplot(dados, aes(x = N_talhoes, fill = Cultivo)) +
   theme_minimal()
 grafico_hist
 
-# Boxplot
+# 6.2. Boxplot
 grafico_box <- ggplot(dados, aes(x = Cultivo, y = N_talhoes, fill = Cultivo)) +
   geom_boxplot(alpha = 0.7) +
   labs(title = "Boxplot do Número de Talhões por Cultivo",
@@ -90,7 +92,7 @@ grafico_box <- ggplot(dados, aes(x = Cultivo, y = N_talhoes, fill = Cultivo)) +
   theme_minimal()
 grafico_box
 
-# Densidade
+# 6.3. Densidade
 grafico_dens <- ggplot(dados, aes(x = N_talhoes, fill = Cultivo)) +
   geom_density(alpha = 0.5) +
   labs(title = "Densidade do Número de Talhões por Cultivo",
@@ -106,7 +108,7 @@ dados$Produtividade_classe <- factor(dados$Produtividade_classe,
                                      levels = c("Baixa", "Média", "Alta", "Muito Alta"),
                                      ordered = TRUE)
 
-# Gráfico de barras
+# 7.1. Gráfico de barras
 grafico_prod <- ggplot(dados, aes(x = Produtividade_classe, fill = Cultivo)) +
   geom_bar(position = "dodge") +
   labs(title = "Distribuição da Classe de Produtividade por Cultivo",
@@ -114,7 +116,7 @@ grafico_prod <- ggplot(dados, aes(x = Produtividade_classe, fill = Cultivo)) +
   theme_minimal()
 grafico_prod
 
-# Gráfico empilhado proporcional
+# 7.3. Gráfico empilhado proporcional
 grafico_empilhado <- ggplot(dados, aes(x = Cultivo, fill = Produtividade_classe)) +
   geom_bar(position = "fill") +
   labs(title = "Proporção da Classe de Produtividade dentro de cada Cultivo",
