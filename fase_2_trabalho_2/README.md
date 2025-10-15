@@ -1,4 +1,4 @@
-Link do repositório: 
+Link do repositório: https://github.com/Pedrolopesh/farm-tech/tree/master/fase_2_trabalho_2
 
 # 🧾 Sistema de Gestão Financeira do Produtor Rural  
 ### (Cana-de-Açúcar, Soja e Açaí)
