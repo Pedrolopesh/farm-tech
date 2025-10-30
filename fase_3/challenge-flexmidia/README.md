@@ -35,80 +35,49 @@
 5. [Tecnologias Utilizadas](#tecnologias-utilizadas)
 6. [Arquitetura da Solução](#arquitetura-da-solução)
 7. [Estratégia de Coleta de Dados](#estratégia-de-coleta-de-dados)
-8. [Segurança e Privacidade](#segurança-e-privacidade)
+8. [Segurança e Privacidade (LGPD)](#segurança-e-privacidade-lgpd)
 9. [Acessibilidade Universal](#acessibilidade-universal)
 10. [Plano de Desenvolvimento](#plano-de-desenvolvimento)
 11. [Casos de Uso](#casos-de-uso)
 12. [Referências](#referências)
-
 ---
 
 ## 🎯 Visão Geral
 
-O **EDUBOT** é um totem inteligente equipado com Inteligência Artificial, projetado para ambientes educacionais como escolas, faculdades e bibliotecas. A solução combina tecnologias de IA com foco total em **acessibilidade universal**, permitindo que todos os estudantes tenham acesso facilitado a informações acadêmicas, horários, avisos e suporte educacional personalizado.
+O EDUBOT é um totem inteligente com Inteligência Artificial projetado para ambientes educacionais, com foco em acessibilidade, interação natural por voz e suporte automatizado a consultas acadêmicas. A solução visa facilitar o acesso à informação institucional, reduzir demandas repetitivas nas secretarias e oferecer uma experiência inclusiva para todos os estudantes, incluindo pessoas com deficiência.
 
-O projeto atende à crescente demanda por soluções tecnológicas inclusivas no ambiente educacional, alinhando-se com a Lei Brasileira de Inclusão (Lei 13.146/2015) e a Lei Geral de Proteção de Dados (LGPD - Lei 13.709/2018).
+O sistema integra hardware embarcado, serviços em nuvem e modelos de IA para entregar informações em tempo real por meio de interface multimodal (voz e tela), garantindo uma experiência intuitiva, personalizada e alinhada às melhores práticas de privacidade e segurança.
 
 ---
 
 ## 📊 Justificativa do Problema
 
-### Contexto Atual
+Ambientes educacionais frequentemente enfrentam desafios como:
+- Dificuldade no acesso rápido a informações acadêmicas importantes 
+- Falta de recursos acessíveis para alunos com diferentes necessidades 
+- Sobrecarga de atendimento presencial em secretarias e pontos de informação 
+- Baixa coleta de dados sobre dúvidas e demandas dos estudantes 
+- Tais fatores impactam a experiência estudantil e a eficiência institucional.
 
-O ambiente educacional brasileiro enfrenta diversos desafios relacionados ao acesso à informação e à inclusão de estudantes com deficiência:
-
-**1. Barreiras de Comunicação**
-
-Estudantes frequentemente enfrentam dificuldades para obter informações básicas como horários de aulas, avisos importantes, localização de salas e serviços acadêmicos. Os métodos tradicionais de comunicação (murais físicos, e-mails institucionais) são ineficientes e não alcançam todos os públicos de forma equitativa.
-
-**2. Exclusão de Pessoas com Deficiência**
-
-Segundo o Censo da Educação Superior 2022 (INEP), apenas 0,56% dos estudantes universitários brasileiros declaram ter alguma deficiência, evidenciando barreiras sistêmicas de acesso à informação e aos serviços educacionais.
-
-**3. Sobrecarga das Secretarias Acadêmicas**
-
-Secretarias e bibliotecas recebem diariamente centenas de consultas repetitivas sobre horários, prazos e procedimentos. Isso sobrecarrega os funcionários e gera filas, reduzindo a eficiência do atendimento.
-
-**4. Falta de Personalização**
-
-Sistemas tradicionais não oferecem personalização baseada no perfil ou necessidades individuais, resultando em experiências genéricas e pouco eficazes.
-
-### Impacto do Problema
-
-- **Exclusão educacional:** Estudantes com deficiência enfrentam barreiras adicionais
-- **Ineficiência operacional:** Tempo desperdiçado em consultas repetitivas
-- **Experiência comprometida:** Frustração devido à dificuldade de acesso à informação
-- **Perda de dados:** Falta de métricas sobre uso de serviços e necessidades dos estudantes
-
-### Oportunidade
-
-A implementação de um totem inteligente com IA e foco em acessibilidade representa uma oportunidade de transformar a experiência educacional, tornando-a mais inclusiva, eficiente e centrada no estudante.
+Com a adoção de um totem inteligente, a instituição passa a oferecer atendimento contínuo, acessível e automatizado, ampliando inclusão, otimização de processos e uso estratégico de dados para melhoria contínua dos serviços educacionais.
 
 ---
 
 ## 💡 Descrição da Solução
 
-### O que é o EDUBOT?
+O EDUBOT consiste em um totem físico equipado com IA, sensores e interface interativa capaz de:
+- Receber comandos de voz ou toque 
+- Processar perguntas e fornecer respostas imediatas relacionadas ao ambiente educacional 
+- Oferecer acessibilidade ampliada por meio de áudio, texto e comandos por voz 
+- Registrar métricas de uso de forma anonimizada para apoio à gestão
 
-O **EDUBOT** é um totem físico interativo equipado com:
+A solução integra um backend em nuvem com APIs e modelos de IA para processamento das solicitações. O sistema foi projetado com foco em:
+- Interatividade intuitiva 
+- Acessibilidade universal 
+- Segurança e privacidade (conformidade LGPD)
+- Escalabilidade para diferentes instituições e contextos
 
-- **Display touchscreen** para interação visual
-- **Sistema de reconhecimento de voz** (funcionalidade principal)
-- **Câmera** para reconhecimento de QR Code
-- **Sensores de proximidade** para ativação automática
-- **Alto-falantes** para feedback de áudio
-- **Conectividade WiFi** para integração com sistemas em nuvem
-- **Hardware embarcado** (ESP32 ou similar) para processamento
-
-> **Nota:** As especificações de hardware são conceituais e podem ser ajustadas nas próximas sprints conforme viabilidade técnica e orçamento.
-
-### Como Funciona?
-
-1. **Ativação:** Estudante se aproxima do totem (sensor de proximidade) ou escaneia QR Code
-2. **Interação por Voz:** Sistema de reconhecimento de voz permite comandos falados (prioridade)
-3. **Processamento IA:** Assistente virtual processa a solicitação usando IA conversacional
-4. **Resposta Multimodal:** Informação é apresentada em texto, áudio e/ou visual
-5. **Coleta de Dados:** Sistema registra métricas de uso (anonimizadas) para análise
+Este documento apresenta a arquitetura inicial, tecnologias envolvidas e estratégia para desenvolvimento incremental da solução.
 
 ### Diferenciais
 
@@ -136,185 +105,162 @@ O **EDUBOT** é um totem físico interativo equipado com:
 - Personalização baseada no perfil do estudante
 - Suporte multilíngue (Português, Inglês, Libras)
 
-### 3. Acessibilidade Universal
+### 3. Acessibilidade
 
-- **Visual:** Leitura de tela, alto contraste, ampliação de texto
-- **Auditiva:** Legendas, tradução em Libras (futura integração)
 - **Cognitiva:** Linguagem simplificada, navegação intuitiva
 - **Motora:** Comandos por voz, botões grandes e espaçados
 
-### 4. Coleta de Feedback
-
-- Avaliação de satisfação após cada interação
-- Coleta de sugestões e reclamações
-- Métricas de uso para melhoria contínua
-
-### 5. Dashboard Institucional
+### 4. Dashboard Institucional
 
 - Visualização de métricas de uso
 - Análise de perguntas frequentes
 - Relatórios de satisfação dos estudantes
-- Identificação de demandas não atendidas
 
 ---
-
 ## 🛠️ Tecnologias Utilizadas
 
-> **Nota:** As tecnologias listadas são opções planejadas e podem ser ajustadas conforme necessidades e viabilidade nas próximas sprints.
+As tecnologias abaixo foram selecionadas considerando acessibilidade, escalabilidade, segurança e viabilidade para a Sprint 1.
 
-### Linguagens de Programação
-
-- **Python 3.11+:** Backend, IA e processamento de dados
-- **JavaScript/TypeScript:** Frontend (se necessário)
+### Linguagens e Frameworks
+- Python 3.11+
+- FastAPI (APIs REST)
+- JavaScript/TypeScript
+- HTML e CSS (prototipação)
 
 ### Inteligência Artificial
+- GPT-4 / Gemini (Processamento de linguagem natural)
+- Whisper (Speech-to-Text)
+- Google Text-to-Speech (acessibilidade por áudio)
+- Scikit-learn (análises futuras)
 
-- **OpenAI GPT-4 / Google Gemini:** IA conversacional
-- **Whisper (OpenAI):** Reconhecimento de voz (speech-to-text)
-- **Google Text-to-Speech:** Síntese de voz (text-to-speech)
-- **Scikit-learn:** Análise de padrões e classificação
+### Infraestrutura e Banco de Dados
+- Supabase (PostgreSQL + Auth + Storage)
+- Google Cloud (execução e monitoramento)
+- n8n (integrações e automações)
 
-### Hardware (Conceitual)
+### Hardware
+- Tela touchscreen
+- Microfone e alto-falantes
+- ESP32 (detecção de presença e ativação)
 
-- **ESP32 ou ESP32-CAM:** Microcontrolador com WiFi e câmera
-- **Sensores de proximidade:** Detecção de presença
-- **Display touchscreen:** Interface visual
-- **Microfone e alto-falantes:** Interação por voz
+### Ferramentas de Apoio
+- Lovable (prototipação rápida)
+- Git / GitHub (versionamento)
+- Markdown (documentação)
 
-> **Importante:** Especificações técnicas detalhadas de hardware serão definidas na fase de implementação.
-
-### Banco de Dados
-
-- **Supabase (PostgreSQL):** Armazenamento de dados estruturados
-- **Redis:** Cache para respostas rápidas
-
-### Serviços de Nuvem
-
-- **AWS / Google Cloud / Azure:** Hospedagem e processamento
-- **N8N:** Automação de workflows e integrações
-
-### Ferramentas de Desenvolvimento
-
-- **Iovable:** Plataforma para desenvolvimento da interface do totem
-- **Git/GitHub:** Controle de versão
-- **Docker:** Containerização (opcional)
-
-### Segurança e Conformidade
-
-- **Criptografia TLS 1.3:** Comunicação segura
-- **OAuth 2.0:** Autenticação (se necessário)
-- **Logs auditáveis:** Conformidade LGPD
 
 ---
 
 ## 🏗️ Arquitetura da Solução
 
+A arquitetura do EDUBOT foi planejada para garantir modularidade, segurança, acessibilidade e integração entre hardware embarcado, serviços em nuvem e IA generativa.
+
 ### Visão Geral
+Usuário → Totem (Tela + Microfone)
+        → API Backend (FastAPI)
+        → Serviços de IA (LLMs + STT + TTS)
+        → Banco de Dados (Supabase)
+        → Dashboard Institucional
 
-A arquitetura do EDUBOT é dividida em camadas para garantir modularidade, escalabilidade e manutenibilidade.
+### 🧩 Componentes Principais
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    CAMADA DE INTERFACE                       │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │   Display    │  │  Microfone   │  │ Alto-falante │      │
-│  │  Touchscreen │  │  (Voz)       │  │  (Áudio)     │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
-└─────────────────────────────────────────────────────────────┘
-                            ↓
-┌─────────────────────────────────────────────────────────────┐
-│                  CAMADA DE PROCESSAMENTO                     │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │  Hardware Embarcado (ESP32 / Raspberry Pi)           │   │
-│  │  - Reconhecimento de voz                             │   │
-│  │  - Detecção de QR Code                               │   │
-│  │  - Controle de sensores                              │   │
-│  └──────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-                            ↓
-┌─────────────────────────────────────────────────────────────┐
-│                    CAMADA DE BACKEND                         │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │  API REST (Python/FastAPI)                           │   │
-│  │  - Processamento de requisições                      │   │
-│  │  - Integração com IA                                 │   │
-│  │  - Gerenciamento de dados                            │   │
-│  └──────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-                            ↓
-┌─────────────────────────────────────────────────────────────┐
-│                    CAMADA DE IA                              │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │   OpenAI     │  │   Whisper    │  │   Google     │      │
-│  │   GPT-4      │  │  (Speech-to- │  │     TTS      │      │
-│  │              │  │    Text)     │  │              │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
-└─────────────────────────────────────────────────────────────┘
-                            ↓
-┌─────────────────────────────────────────────────────────────┐
-│                  CAMADA DE DADOS                             │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │  Supabase (PostgreSQL) + Redis (Cache)               │   │
-│  │  - Dados acadêmicos                                  │   │
-│  │  - Métricas de uso                                   │   │
-│  │  - Logs de auditoria                                 │   │
-│  └──────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-                            ↓
-┌─────────────────────────────────────────────────────────────┐
-│                 CAMADA DE ANALYTICS                          │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │  Dashboard Institucional                             │   │
-│  │  - Visualização de métricas                          │   │
-│  │  - Relatórios de uso                                 │   │
-│  │  - Análise de satisfação                             │   │
-│  └──────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-```
+| Camada | Função | Tecnologias |
+|--------|--------|------------|
+| Interface do Totem | Interação via voz e toque | Tela touch, microfone, alto-falantes |
+| Backend | Processamento, lógica e orquestração | Python, FastAPI, APIs REST |
+| Inteligência Artificial | Interpretação e respostas naturais | Whisper, GPT-4/Gemini, TTS |
+| Banco de Dados | Persistência e análises | Supabase (PostgreSQL) |
+| Monitoramento e Analytics | Métricas de uso e insights | Dashboard, logs de uso |
 
-### Fluxo de Dados
+### Fluxo Simplificado
 
-1. **Entrada:** Estudante interage por voz ou toque
-2. **Captura:** Hardware captura áudio/toque e envia para backend
-3. **Processamento:** IA processa a requisição e gera resposta
-4. **Armazenamento:** Dados são salvos (anonimizados) no banco
-5. **Resposta:** Informação é apresentada ao estudante (áudio + visual)
-6. **Analytics:** Métricas são processadas para dashboard institucional
+1. Usuário interage com o totem (voz ou toque).
+2. Backend recebe a solicitação.
+3. Serviços de IA interpretam e geram resposta.
+4. Resposta apresentada na tela e áudio.
+5. Dados de uso armazenados conforme LGPD. 
+6. Dashboard para gestão e insights.
 
 ### Diagramas Detalhados
+TODO: PREENCHER COM DIAGRAMA
 
-Os diagramas de arquitetura completos estão disponíveis na pasta `docs/diagramas/`:
+---
+## 📱 Casos de Uso
 
-- `arquitetura-geral.png` - Visão geral do sistema
-- `fluxo-dados.png` - Pipeline de processamento de dados
-- `pipeline-ia.png` - Fluxo de processamento de IA
+### UC01 — Consultar Informações Acadêmicas
+
+**Ator:** Estudante  
+**Objetivo:** Obter horários, calendários e avisos  
+**Interação:** Voz ou toque  
+**Resultado:** Resposta exibida na tela e narrada em áudio  
+
+Exemplo: "Qual é meu horário de aula hoje?"
+
+---
+
+### UC02 — Acessibilidade para Deficiência Visual
+
+**Ator:** Estudante com deficiência visual  
+**Objetivo:** Obter informações sem barreiras  
+**Interação:** Comandos de voz + feedback em áudio  
+**Recurso:** Ativação automática ao detectar presença  
+
+Exemplo: "Onde fica a biblioteca?"
+
+---
+
+### UC03 — Avaliar Atendimento
+
+**Ator:** Todos os usuários  
+**Objetivo:** Registrar satisfação e experiência  
+**Interação:** Avaliação 1–5 e comentário  
+**Uso:** Métricas e melhorias contínuas
+
+---
+
+### UC04 — Informações para Visitantes
+
+**Ator:** Visitantes do campus  
+**Objetivo:** Informações gerais e localização  
+**Interação:** Toque ou voz  
+**Resultado:** Orientações no mapa e áudio
+
+### Diagramas Detalhados
+TODO: PREENCHER COM DIAGRAMA
 
 ---
 
 ## 📊 Estratégia de Coleta de Dados
+## Estratégia de Coleta de Dados
 
-### Dados Coletados
+O **EDUBOT** atua não apenas como ponto de informação, mas também como ferramenta de inteligência para apoiar a gestão educacional e a melhoria contínua da experiência dos estudantes. A coleta de dados será realizada de forma **anonimizada** e em conformidade com a **LGPD**, visando compreender padrões de uso, preferências dos usuários e eficiência da solução.
 
-| Categoria | Dados | Finalidade | Anonimização |
-|-----------|-------|------------|--------------|
-| **Interação** | Pergunta, resposta, timestamp | Melhoria da IA | ✅ Sim |
-| **Uso** | Horário, duração, localização do totem | Analytics | ✅ Sim |
-| **Satisfação** | Avaliação (1-5 estrelas), feedback | Qualidade | ✅ Sim |
-| **Técnicos** | Erros, latência, disponibilidade | Monitoramento | ✅ Sim |
+### Tipos de Dados Coletados
 
-### Métodos de Coleta
+| Categoria              | Exemplos                                            | Finalidade                                   |
+|-----------------------|------------------------------------------------------|----------------------------------------------|
+| Perfil de uso (opcional e anônimo) | Idioma preferido, tipo de usuário (aluno/visitante) | Personalizar acesso e conteúdo               |
+| Interação             | Tempo de interação, perguntas realizadas, voz/toque  | Medir fluidez e eficiência                   |
+| Engajamento           | Nº de interações, taxa de conclusão, tempo médio     | Identificar padrões e demandas               |
+| Satisfação            | Avaliação rápida (1 a 5) e comentários               | Monitorar qualidade do atendimento           |
+| Desempenho técnico    | Horários de uso, erros, tempo de resposta            | Otimizar performance e suporte               |
 
-1. **Automática:** Registro de cada interação com timestamp
-2. **Sensores:** Detecção de presença e tempo de uso
-3. **Feedback Ativo:** Solicitação de avaliação após interação
-4. **Logs de Sistema:** Erros, performance e disponibilidade
+### Objetivos da Coleta
 
-### Armazenamento
+- Identificar as principais demandas dos estudantes.  
+- Ajustar a interface e os recursos de acessibilidade.  
+- Melhorar a precisão e a relevância das respostas da IA.  
+- Planejar infraestrutura com base em horários de pico.  
+- Monitorar continuamente a satisfação do usuário.  
+- Gerar insights para apoio às decisões institucionais.
 
-- **Banco de Dados:** Supabase (PostgreSQL) com criptografia
-- **Retenção:** Dados anonimizados mantidos por 12 meses
-- **Backup:** Backup diário automático em nuvem
-- **Acesso:** Restrito a administradores autorizados
+### Privacidade e Segurança
+
+- Coleta mínima necessária.  
+- Dados tratados apenas de forma agregada e anonimizada.  
+- Aviso de coleta exibido no primeiro uso.  
+- Armazenamento seguro com acesso restrito.  
+- Conformidade com a LGPD em todas as etapas.
 
 ### Conformidade LGPD
 
@@ -326,198 +272,58 @@ Os diagramas de arquitetura completos estão disponíveis na pasta `docs/diagram
 
 ---
 
-## 🔒 Segurança e Privacidade
+## 🔒 Segurança e Privacidade (LGPD)
 
-### Princípios de Segurança
+O EDUBOT segue os princípios da Lei Geral de Proteção de Dados (LGPD), garantindo transparência, segurança e ética no tratamento das informações.
 
-1. **Privacy by Design:** Privacidade desde a concepção
-2. **Minimização de Dados:** Coletar apenas o necessário
-3. **Criptografia:** Dados em trânsito e em repouso
-4. **Controle de Acesso:** Autenticação e autorização rigorosas
-5. **Auditoria:** Logs de todas as operações sensíveis
+### Diretrizes
+- Dados coletados apenas para fins acadêmicos e melhoria do serviço
+- Princípio da minimização: somente dados necessários
+- Consentimento informado quando aplicável
+- Dados sensíveis tratados com criptografia e controles rígidos
 
 ### Medidas de Segurança
+- Criptografia em trânsito e repouso
+- Controle de acesso por permissões
+- Auditoria e monitoramento de logs
+- Procedimentos para notificações de incidentes
 
-| Camada | Medida | Tecnologia |
-|--------|--------|------------|
-| **Comunicação** | Criptografia TLS 1.3 | HTTPS |
-| **Dados** | Criptografia AES-256 | PostgreSQL |
-| **Acesso** | Autenticação multifator | OAuth 2.0 |
-| **Monitoramento** | Logs auditáveis | CloudWatch |
-| **Backup** | Backup criptografado | AWS S3 |
-
-### Conformidade LGPD
-
-O EDUBOT está em conformidade com a Lei Geral de Proteção de Dados (Lei 13.709/2018):
-
-- **Base Legal:** Legítimo interesse (melhoria de serviços educacionais)
-- **Direitos do Titular:** Acesso, correção, exclusão de dados
-- **DPO:** Encarregado de proteção de dados designado
-- **Relatório de Impacto:** RIPD elaborado antes da implementação
-- **Incidentes:** Procedimento de notificação em até 72h
+### Conformidade Garantida
+- Finalidade específica e legítima
+- Transparência ao usuário
+- Retenção e descarte seguro dos dados
 
 ---
+## 🗂️ Plano de Desenvolvimento
 
-## ♿ Acessibilidade Universal
+### Fases do Projeto
 
-O EDUBOT foi projetado para atender aos requisitos da **Lei Brasileira de Inclusão (Lei 13.146/2015)** e das **Diretrizes de Acessibilidade para Conteúdo Web (WCAG 2.1 - Nível AA)**.
+| Fase | Objetivo | Entregas |
+|---|---|---|
+Planejamento | Definir escopo e arquitetura | Documentação e diagramas |
+Backend e IA | Implementar APIs e conexão com IA | API funcional + POC IA |
+Interface e Acessibilidade | Prototipar interface e comandos por voz | UI funcional e acessível |
+Hardware | Integrar ESP32 ao fluxo | Totem com sensores funcionais |
+Coleta e Dashboard | Registrar interações e exibir métricas | Registro de dados + dashboards |
+Testes | Validação e ajustes | Protótipo funcional para demonstração |
 
-### Acessibilidade para Deficiência Visual
+### Metodologia
+- Abordagem ágil
+- Entregas incrementais
+- Feedback contínuo
+- Validação com usuários simulados
 
-- **Leitura de tela:** Todo conteúdo é lido em voz alta
-- **Alto contraste:** Opção de cores contrastantes
-- **Ampliação de texto:** Fontes ajustáveis (16px a 48px)
-- **Navegação por voz:** Comandos falados para navegação
-- **Botões em Braille:** Identificação tátil dos controles
+### Responsabilidades da Equipe
 
-### Acessibilidade para Deficiência Auditiva
+| Membro | Responsabilidades |
+|--------|------------------|
+Fabrício | Backend, IA, documentação técnica |
+Pedro | Arquitetura, diagramas e infraestrutura |
+Enzo | Estratégia e modelagem de dados |
+Larissa | LGPD, acessibilidade e compliance |
+Gabriel | Interface, integração e hardware |
 
-- **Legendas:** Todo áudio possui legenda em texto
-- **Tradução em Libras:** Integração futura com VLibras ou Hand Talk
-- **Alertas visuais:** Notificações por meio de ícones e cores
-- **Controle de volume:** Ajuste individual de volume
-
-### Acessibilidade para Deficiência Cognitiva
-
-- **Linguagem simples:** Frases curtas e diretas
-- **Navegação intuitiva:** Interface minimalista
-- **Tempo ajustável:** Sem limite de tempo para interação
-- **Confirmações visuais:** Feedback claro de cada ação
-- **Ajuda contextual:** Instruções em cada tela
-
-### Acessibilidade para Deficiência Motora
-
-- **Comandos por voz:** Interação sem necessidade de toque
-- **Botões grandes:** Alvos de toque de no mínimo 44x44px
-- **Espaçamento:** Distância mínima de 8px entre elementos
-- **Altura ajustável:** Totem acessível para cadeirantes
-
-### Acessibilidade para Baixo Letramento
-
-- **Ícones universais:** Símbolos reconhecíveis
-- **Áudio explicativo:** Todas as opções lidas em voz alta
-- **Navegação guiada:** Passo a passo com instruções
-- **Linguagem acessível:** Vocabulário simples e direto
-
----
-
-## 📅 Plano de Desenvolvimento
-
-### Cronograma Geral
-
-O desenvolvimento do EDUBOT está planejado para 6 meses, dividido em 6 sprints de 4 semanas cada.
-
-> **Nota:** As datas das Sprints 2-6 são estimativas para fins de planejamento. As datas reais serão definidas pela FIAP conforme o andamento do Challenge.
-
-### Sprint 1: Planejamento e Documentação (Atual - Outubro 2025)
-
-**Status:** ✅ Em andamento
-
-**Objetivos:**
-- Documentar justificativa do problema
-- Definir arquitetura da solução
-- Especificar tecnologias
-- Criar estratégia de coleta de dados
-- Elaborar plano de desenvolvimento
-
-**Entregas:**
-- ✅ README.md completo
-- ✅ Diagramas de arquitetura
-- ✅ Documentação de acessibilidade
-- ✅ Repositório GitHub configurado
-
-**Prazo:** 31/10/2025, 23h59
-
----
-
-### Sprint 2: Desenvolvimento do Backend (Estimativa: Novembro 2025)
-
-**Objetivos:**
-- Configurar ambiente de desenvolvimento
-- Desenvolver API REST com FastAPI
-- Integrar OpenAI GPT-4 para IA conversacional
-- Implementar Whisper para reconhecimento de voz
-- Configurar banco de dados Supabase
-- Implementar autenticação e segurança básica
-
-**Entregas:**
-- API funcional com endpoints principais
-- Integração com IA conversacional
-- Sistema de reconhecimento de voz
-- Banco de dados estruturado
-- Testes unitários do backend
-
----
-
-### Sprint 3: Desenvolvimento do Frontend (Estimativa: Dezembro 2025)
-
-**Objetivos:**
-- Desenvolver interface do totem usando Iovable
-- Implementar design acessível (WCAG 2.1)
-- Criar componentes de interação por voz
-- Integrar frontend com backend
-- Implementar recursos de acessibilidade visual
-
-**Entregas:**
-- Interface funcional e acessível
-- Integração com API backend
-- Sistema de navegação por voz
-- Testes de usabilidade
-- Documentação de interface
-
----
-
-### Sprint 4: Integração de Hardware (Estimativa: Janeiro 2026)
-
-**Objetivos:**
-- Configurar ESP32 / hardware embarcado
-- Integrar sensores de proximidade
-- Configurar câmera para QR Code
-- Testar microfone e alto-falantes
-- Integrar hardware com software
-
-**Entregas:**
-- Hardware funcional e integrado
-- Sistema de detecção de presença
-- Reconhecimento de QR Code
-- Testes de integração hardware-software
-- Documentação técnica de hardware
-
----
-
-### Sprint 5: Acessibilidade e Integrações (Estimativa: Fevereiro 2026)
-
-**Objetivos:**
-- Implementar recursos avançados de acessibilidade
-- Integrar VLibras ou Hand Talk (Libras)
-- Desenvolver dashboard institucional
-- Implementar sistema de analytics
-- Realizar testes com usuários PcD
-
-**Entregas:**
-- Recursos de acessibilidade completos
-- Dashboard funcional
-- Sistema de métricas e analytics
-- Relatório de testes com PcD
-- Ajustes baseados em feedback
-
----
-
-### Sprint 6: Testes, Ajustes e Lançamento (Estimativa: Março 2026)
-
-**Objetivos:**
-- Realizar testes de carga e performance
-- Auditar segurança e conformidade LGPD
-- Criar documentação de usuário
-- Treinar equipe institucional
-- Preparar lançamento piloto
-
-**Entregas:**
-- Sistema completo e testado
-- Documentação completa (técnica e usuário)
-- Relatório de auditoria de segurança
-- Plano de implantação
-- Lançamento piloto em instituição parceira
+A equipe atuará de forma colaborativa revisando entregas e garantindo consistência técnica.
 
 ---
 
@@ -535,80 +341,6 @@ O desenvolvimento do EDUBOT está planejado para 6 meses, dividido em 6 sprints 
 
 ---
 
-## 📱 Casos de Uso
-
-### Caso de Uso 1: Consulta de Horário de Aula
-
-**Ator:** Estudante
-
-**Fluxo:**
-1. Estudante se aproxima do totem
-2. Totem ativa automaticamente (sensor de proximidade)
-3. Estudante fala: *"Qual é o meu horário de aula hoje?"*
-4. Sistema reconhece a voz e processa a pergunta
-5. IA consulta banco de dados acadêmico
-6. Totem exibe horário na tela e lê em voz alta
-7. Estudante confirma: *"Obrigado"*
-8. Sistema solicita avaliação (1-5 estrelas)
-9. Estudante avalia e totem retorna ao estado inicial
-
-**Benefício:** Acesso rápido à informação sem necessidade de login ou navegação complexa
-
----
-
-### Caso de Uso 2: Estudante com Deficiência Visual
-
-**Ator:** Estudante com deficiência visual
-
-**Fluxo:**
-1. Estudante se aproxima do totem
-2. Totem detecta presença e anuncia: *"Olá! Como posso ajudar?"*
-3. Estudante fala: *"Onde fica a biblioteca?"*
-4. Sistema processa e responde em áudio: *"A biblioteca fica no 3º andar, bloco B. Deseja instruções detalhadas?"*
-5. Estudante: *"Sim"*
-6. Sistema fornece instruções passo a passo em áudio
-7. Estudante agradece e se afasta
-8. Totem retorna ao estado inicial
-
-**Benefício:** Acessibilidade total sem necessidade de assistência humana
-
----
-
-### Caso de Uso 3: Coleta de Feedback Institucional
-
-**Ator:** Estudante
-
-**Fluxo:**
-1. Estudante interage com totem para consulta
-2. Após resposta, totem pergunta: *"Como você avalia este atendimento?"*
-3. Estudante seleciona 4 estrelas no touchscreen
-4. Totem pergunta: *"Deseja deixar um comentário?"*
-5. Estudante fala: *"O totem é muito útil, mas poderia ter mais informações sobre eventos"*
-6. Sistema registra feedback (anonimizado)
-7. Dashboard institucional recebe dados para análise
-8. Instituição identifica demanda por informações de eventos
-
-**Benefício:** Coleta estruturada de feedback para melhoria contínua
-
----
-
-### Caso de Uso 4: Consulta em Horário de Pico
-
-**Ator:** Múltiplos estudantes
-
-**Fluxo:**
-1. Fila de 5 estudantes aguardando atendimento
-2. Primeiro estudante interage rapidamente (30 segundos)
-3. Sistema processa e responde
-4. Estudante se afasta, próximo se aproxima automaticamente
-5. Processo se repete para todos os estudantes
-6. Sistema registra horário de pico (12h-13h)
-7. Dashboard mostra necessidade de totem adicional
-
-**Benefício:** Redução de filas em secretarias e identificação de demandas
-
----
-
 ## 🏆 Diferenciais Competitivos
 
 1. **Acessibilidade Total:** Conformidade completa com Lei 13.146/2015 e WCAG 2.1
@@ -617,7 +349,7 @@ O desenvolvimento do EDUBOT está planejado para 6 meses, dividido em 6 sprints 
 4. **Privacidade Garantida:** Conformidade total com LGPD
 5. **Escalabilidade:** Solução replicável em milhares de instituições
 6. **Analytics Institucional:** Dashboard com métricas valiosas
-7. **Baixo Custo:** Uso de hardware acessível (ESP32) e APIs de IA
+7. **Baixo Custo:** Uso de APIs com IA
 
 ---
 
@@ -710,4 +442,4 @@ Este projeto é desenvolvido para fins acadêmicos como parte do Challenge FlexM
 ---
 
 **Última atualização:** Outubro de 2025  
-**Versão:** 2.0 (Simplificada)
+**Versão:** 3.0 (Simplificada)
