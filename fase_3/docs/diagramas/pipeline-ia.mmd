@@ -1,0 +1,15 @@
+graph TD
+    A["🎤 INPUT<br/>Voz do Estudante"] --> B["🔊 Whisper API<br/>(Speech-to-Text)"]
+    B --> C["📝 Texto Processado<br/>'Qual meu horário?'"]
+    C --> D["🤖 OpenAI GPT-4<br/>(IA Conversacional)"]
+    D --> E["💬 Resposta Gerada<br/>'Sua aula é às 14h'"]
+    E --> F["🔈 Google TTS<br/>(Text-to-Speech)"]
+    F --> G["🔊 OUTPUT<br/>Áudio + Texto na Tela"]
+    
+    style A fill:#E3F2FD
+    style B fill:#FFF3E0
+    style C fill:#E8F5E9
+    style D fill:#FFE0B2
+    style E fill:#F3E5F5
+    style F fill:#FCE4EC
+    style G fill:#C5E1A5
