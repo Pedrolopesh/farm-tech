@@ -17,11 +17,11 @@
 
 | Nome | RM | E-mail | Responsabilidade |
 |------|-----|--------|------------------|
-| **Fabrício Mouzer Brito** | 566777 | fabriciomouzer@hotmail.com | Documentação Técnica no GitHub |
-| **Pedro Henrique Lopes dos Santos** | - | pedrolopeshls99@gmail.com | Arquitetura e Diagramas |
-| **Enzo Nunes Castanheira Gloria da Silva** | - | enzoncgs@gmail.com | Estratégia de Coleta de Dados |
-| **Larissa Nunes Moreira Reis** | - | larissa.nmreis@gmail.com | Acessibilidade e LGPD |
-| **Gabriel Rapozo Guimarães Soares** | - | rapozogabriel8@gmail.com | Tecnologias e Integração de IA |
+| **Fabrício Mouzer Brito** | RM566777 | fabriciomouzer@hotmail.com | Documentação Técnica no GitHub |
+| **Pedro Henrique Lopes dos Santos** | RM568359 | pedrolopeshls99@gmail.com | Arquitetura e Diagramas |
+| **Enzo Nunes Castanheira Gloria da Silva** | RM567599 | enzoncgs@gmail.com | Estratégia de Coleta de Dados |
+| **Larissa Nunes Moreira Reis** | RM568280 | larissa.nmreis@gmail.com | Acessibilidade e LGPD |
+| **Gabriel Rapozo Guimarães Soares** | RM568480 | rapozogabriel8@gmail.com | Tecnologias e Integração de IA |
 
 **Turma:** R  
 **Data:** Outubro de 2025  
@@ -47,7 +47,7 @@
 
 ## 🎯 Visão Geral
 
-O EDUBOT é um totem inteligente com Inteligência Artificial projetado para ambientes educacionais, com foco em acessibilidade, interação natural por voz e suporte automatizado a consultas acadêmicas. A solução visa facilitar o acesso à informação institucional, reduzir demandas repetitivas nas secretarias e oferecer uma experiência inclusiva para todos os estudantes, incluindo pessoas com deficiência.
+O EDUBOT é um totem inteligente com Inteligência Artificial projetado para ambientes educacionais de nível superior, com foco em acessibilidade, interação natural por voz e suporte automatizado a consultas acadêmicas. A solução visa facilitar o acesso à informação institucional, reduzir demandas repetitivas nas secretarias e oferecer uma experiência inclusiva para todos os estudantes, incluindo pessoas com deficiência.
 
 O sistema integra hardware embarcado, serviços em nuvem e modelos de IA para entregar informações em tempo real por meio de interface multimodal (voz e tela), garantindo uma experiência intuitiva, personalizada e alinhada às melhores práticas de privacidade e segurança.
 
@@ -132,7 +132,7 @@ As tecnologias abaixo foram selecionadas considerando acessibilidade, escalabili
 
 ### Inteligência Artificial
 - GPT-4 / Gemini (Processamento de linguagem natural)
-- Whisper (Speech-to-Text)
+- Whisper (Speech-to-Text): responsável pela transcrição e tradução de audio para texto
 - Google Text-to-Speech (acessibilidade por áudio)
 - Scikit-learn (análises futuras)
 
@@ -144,7 +144,7 @@ As tecnologias abaixo foram selecionadas considerando acessibilidade, escalabili
 ### Hardware
 - Tela touchscreen
 - Microfone e alto-falantes
-- ESP32 (detecção de presença e ativação)
+- ESP32-CAM (detecção de presença e ativação)
 
 ### Ferramentas de Apoio
 - Lovable (prototipação rápida)
@@ -170,10 +170,13 @@ Usuário → Totem (Tela + Microfone)
 | Camada | Função | Tecnologias |
 |--------|--------|------------|
 | Interface do Totem | Interação via voz e toque | Tela touch, microfone, alto-falantes |
+| Sensoriamento Inteligente | Detecção de presença e ativação automática | ESP32-CAM|
 | Backend | Processamento, lógica e orquestração | Python, FastAPI, APIs REST |
 | Inteligência Artificial | Interpretação e respostas naturais | Whisper, GPT-4/Gemini, TTS |
 | Banco de Dados | Persistência e análises | Supabase (PostgreSQL) |
-| Monitoramento e Analytics | Métricas de uso e insights | Dashboard, logs de uso |
+| Monitoramento e Analytics* | Métricas de uso e insights | Dashboard, logs de uso |
+
+*Os dados coletados estão descritos em tópico específico abaixo "Estratégias de coleta de dados"
 
 ### Fluxo Simplificado
 
@@ -242,7 +245,7 @@ O **EDUBOT** atua não apenas como ponto de informação, mas também como ferra
 
 | Categoria              | Exemplos                                            | Finalidade                                   |
 |-----------------------|------------------------------------------------------|----------------------------------------------|
-| Perfil de uso (opcional e anônimo) | Idioma preferido, tipo de usuário (aluno/visitante) | Personalizar acesso e conteúdo               |
+| Perfil de uso (opcional e anônimo) | Idioma preferido, tipo de usuário (aluno/professor), faixa etária, escolaridade | Personalizar acesso e conteúdo               |
 | Interação             | Tempo de interação, perguntas realizadas, voz/toque  | Medir fluidez e eficiência                   |
 | Engajamento           | Nº de interações, taxa de conclusão, tempo médio     | Identificar padrões e demandas               |
 | Satisfação            | Avaliação rápida (1 a 5) e comentários               | Monitorar qualidade do atendimento           |
@@ -269,7 +272,7 @@ O **EDUBOT** atua não apenas como ponto de informação, mas também como ferra
 
 - ✅ **Minimização:** Apenas dados essenciais são coletados
 - ✅ **Anonimização:** Dados pessoais são anonimizados
-- ✅ **Consentimento:** Aviso de coleta exibido no primeiro uso
+- ✅ **Consentimento:** Só será permitido uso por maiores de 18 anos e terá aviso de coleta exibido no primeiro uso
 - ✅ **Transparência:** Política de privacidade acessível
 - ✅ **Segurança:** Criptografia e controle de acesso
 
@@ -306,7 +309,7 @@ O EDUBOT segue os princípios da Lei Geral de Proteção de Dados (LGPD), garant
 Planejamento | Definir escopo e arquitetura | Documentação e diagramas |
 Backend e IA | Implementar APIs e conexão com IA | API funcional + POC IA |
 Interface e Acessibilidade | Prototipar interface e comandos por voz | UI funcional e acessível |
-Hardware | Integrar ESP32 ao fluxo | Totem com sensores funcionais |
+Hardware | Integrar ESP32-CAM ao fluxo | Totem com sensores funcionais |
 Coleta e Dashboard | Registrar interações e exibir métricas | Registro de dados + dashboards |
 Testes | Validação e ajustes | Protótipo funcional para demonstração |
 
@@ -330,23 +333,9 @@ A equipe atuará de forma colaborativa revisando entregas e garantindo consistê
 
 ---
 
-### Divisão de Responsabilidades
-
-**Fabrício Mouzer Brito (RM 566777):**
-- Arquitetura geral do sistema
-- Desenvolvimento backend (API, IA, banco de dados)
-- Integração de serviços de IA (OpenAI, Whisper)
-- Segurança e conformidade LGPD
-- Documentação técnica
-- Coordenação do projeto
-
-> **Nota:** Como projeto individual, todas as responsabilidades são do aluno. Em caso de formação de equipe futura, as responsabilidades serão redistribuídas.
-
----
-
 ## 🏆 Diferenciais Competitivos
 
-1. **Acessibilidade Total:** Conformidade completa com Lei 13.146/2015 e WCAG 2.1
+1. **Acessibilidade** 
 2. **Interação por Voz:** Reconhecimento de voz como funcionalidade principal
 3. **IA Conversacional:** Respostas inteligentes e contextualizadas
 4. **Privacidade Garantida:** Conformidade total com LGPD
