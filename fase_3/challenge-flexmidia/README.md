@@ -188,7 +188,8 @@ Usuário → Totem (Tela + Microfone)
 6. Dashboard para gestão e insights.
 
 ### Diagramas Detalhados
-TODO: PREENCHER COM DIAGRAMA
+<img width="1615" height="571" alt="image" src="https://github.com/user-attachments/assets/0a47698e-23d8-45db-9060-ebb169d59906" />
+
 
 ---
 ## 📱 Casos de Uso
