@@ -15,32 +15,21 @@ PEDRO HENRIQUE LOPES DOS SANTOS_RM568359_fase3_cap1
 👩‍🏫 Professores:
 Tutor(a)
 Nome do Tutor
-Coordenador(a)
-Nome do Coordenador
+
 📜 Descrição
-Descreva seu projeto com base no texto do PBL (até 600 palavras)
+O PBL (Project-Based Learning) do curso de Inteligência Artificial é uma jornada que simula o crescimento de uma startup.
+No nosso caso, essa startup é a FarmTech Solutions, que atua (de forma fictícia) como uma consultoria em soluções para o setor do agronegócio — uma das áreas mais promissoras para aplicação de IA no Brasil, segundo o Global AI Jobs Barometer da PwC (2025).
+Como continuação do projeto, nesta fase o grupo está simulando o desenvolvimento de um banco de dados bem estruturado, com a instalação de banco de dados da Oracle, integração e manejo agrícola da Fase 1 e 2 nesse banco.
+Utilizou-se o SELECT* e demonstrou-se a operacionalização de consultas SQL.
 
 📁 Estrutura de pastas
-Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
-
-.github: 
-
-scripts: Posicione aqui scripts auxiliares para tarefas específicas do seu projeto. Exemplo: deploy, migrações de banco de dados, backups.
-
-src: Todo o código fonte criado para o desenvolvimento do projeto ao longo das 7 fases.
-
-README.md: arquivo que serve como guia e explicação geral sobre o projeto (o mesmo que você está lendo agora).
+.github: https://github.com/Pedrolopesh/farm-tech/blob/master/fase_3/Fase%203_CAP%201
 
 🔧 Como executar o código
-Acrescentar as informações necessárias sobre pré-requisitos (IDEs, serviços, bibliotecas etc.) e instalação básica do projeto, descrevendo eventuais versões utilizadas. Colocar um passo a passo de como o leitor pode baixar o seu código e executá-lo a partir de sua máquina ou seu repositório. Considere a explicação organizada em fase.
+PASSO 1: INSTALAÇÃO DO ORACLE NA MÁQUINA
+PASSO 2: IMPORTAR E RENOMEAR A BASE USADA NA FASE 2
+PASSO 3: USAR SELECT*
+PASSO 4: EXECUÇÃO E APRESENTAÇÃO DE CONSULTAS SQL CORRETAS E FUNCIONAIS
 
 🗃 Histórico de lançamentos
-0.5.0 - XX/XX/2024 *
-0.4.0 - XX/XX/2024 *
-0.3.0 - XX/XX/2024 *
-0.2.0 - XX/XX/2024 *
-0.1.0 - XX/XX/2024 *
-📋 Licença
-
-
-MODELO GIT FIAP por Fiap está licenciado sobre Attribution 4.0 International.
+1.0 - 10/11/2025
