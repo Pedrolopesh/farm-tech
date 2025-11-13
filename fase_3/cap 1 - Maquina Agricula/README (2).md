@@ -59,32 +59,47 @@ Utilizou-se o SELECT* e demonstrou-se a operacionalização de consultas SQL*
 ## PASSO 3: VISUALIZAÇÃO DA BASE
 <img width="1919" height="1023" alt="image" src="https://github.com/user-attachments/assets/ef13c1a0-a5f2-4854-af68-0912e97705b9" />
 
-## PASSO 4: USO DE SELECT* PARA COMANDOS - EXECUÇÃO E APRESENTAÇÃO DE CONSULTAS SQL CORRETAS E FUNCIONAIS
+## PASSO 4: SQL
+-- SELECIONAR AS PRIMEIRAS 10 LINHAS
+SELECT * FROM sensores
+FETCH FIRST 10 ROWS ONLY;
+
+-- Selecionar a umidade de 15,8
+SELECT umidade
+FROM sensores
+WHERE umidade = '15,8';
+
+-- Colocar em ordem decrescente por umidade
+SELECT umidade
+FROM sensores
+ORDER BY umidade DESC;
+
+-- Selecionar as linhas que possuem PH > 4,4
+SELECT *
+FROM sensores
+WHERE ph > 4.4;
+
+## PASSO 5: USO DE SELECT* PARA COMANDOS - EXECUÇÃO E APRESENTAÇÃO DE CONSULTAS SQL CORRETAS E FUNCIONAIS
 <img width="1919" height="1021" alt="image" src="https://github.com/user-attachments/assets/dde38dc2-f193-4ed1-b4cf-4bb406c6fda2" />
 
 
-## PASSO 5: TESTES DE OPERACIONALIZAÇÃO: SELECIONAR AS PRIMEIRAS 10 LINHAS
+## PASSO 6: TESTES DE OPERACIONALIZAÇÃO: SELECIONAR AS PRIMEIRAS 10 LINHAS
 <img width="1919" height="1020" alt="image" src="https://github.com/user-attachments/assets/868a287d-863c-4443-87e0-68d277a5c2f4" />
 <img width="1919" height="1017" alt="image" src="https://github.com/user-attachments/assets/ec7eb654-82ac-4e36-9426-d9d327c78d83" />
 
 
-## PASSO 6: TESTES DE OPERACIONALIZAÇÃO: Selecionar a umidade de 15,8
+## PASSO 7: TESTES DE OPERACIONALIZAÇÃO: Selecionar a umidade de 15,8
 <img width="1919" height="1019" alt="image" src="https://github.com/user-attachments/assets/c2979b8c-5292-402f-a056-026ad704787a" />
 
 
-## PASSO 7: TESTES DE OPERACIONALIZAÇÃO: Colocar em ordem decrescente por umidade
+## PASSO 8: TESTES DE OPERACIONALIZAÇÃO: Colocar em ordem decrescente por umidade
 <img width="1919" height="1018" alt="image" src="https://github.com/user-attachments/assets/e09f8d7d-1059-4381-882a-b632cb394566" />
 
 
-## PASSO 8: TESTES DE OPERACIONALIZAÇÃO:Selecionar as linhas que possuem PH>4,4
+## PASSO 9: TESTES DE OPERACIONALIZAÇÃO:Selecionar as linhas que possuem PH>4,4
 <img width="1919" height="1022" alt="image" src="https://github.com/user-attachments/assets/c58f703b-c895-4c01-855c-57052bd4befc" />
 
 
 
-## 🔧 Ir Além - Dashboard em Python
-
-
-
-
 🗃 Histórico de lançamentos
-1.0 - 10/11/2025
+2.0 - 12/11/2025
