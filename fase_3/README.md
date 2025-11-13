@@ -29,11 +29,6 @@
 | **Gabriel Rapozo Guimarães Soares** | RM568480 | rapozogabriel8@gmail.com |
 
 
-
-## 👩‍🏫 Professores:
-### Tutor(a) 
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do Tutor</a>
-
 ## 📜 Descrição
 *O PBL (Project-Based Learning) do curso de Inteligência Artificial é uma jornada que simula o crescimento de uma startup.
 No nosso caso, essa startup é a FarmTech Solutions, que atua (de forma fictícia) como uma consultoria em soluções para o setor do agronegócio — uma das áreas mais promissoras para aplicação de IA no Brasil, segundo o Global AI Jobs Barometer da PwC (2025).
@@ -43,7 +38,6 @@ Utilizou-se o SELECT* e demonstrou-se a operacionalização de consultas SQL*
 
 ## 📁 Estrutura de pastas
 .github: https://github.com/Pedrolopesh/farm-tech/blob/master/fase_3/Fase%203_CAP%201
-
 
 
 ## 🔧 Como executar os códigos
@@ -85,6 +79,9 @@ Utilizou-se o SELECT* e demonstrou-se a operacionalização de consultas SQL*
 ## PASSO 8: TESTES DE OPERACIONALIZAÇÃO:Selecionar as linhas que possuem PH>4,4
 <img width="1919" height="1022" alt="image" src="https://github.com/user-attachments/assets/c58f703b-c895-4c01-855c-57052bd4befc" />
 
+
+
+## 🔧 Ir Além - Dashboard em Python
 
 
 
