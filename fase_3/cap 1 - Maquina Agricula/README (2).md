@@ -102,6 +102,8 @@ WHERE ph > 4.4
 ## PASSO 9: TESTES DE OPERACIONALIZAÇÃO:Selecionar as linhas que possuem PH>4,4
 <img width="1919" height="1022" alt="image" src="https://github.com/user-attachments/assets/c58f703b-c895-4c01-855c-57052bd4befc" />
 
+## PASSO 10: VÍDEO YOUTUBE
+<https://www.youtube.com/watch?v=7NuAqoN4vzw>
 
 
 🗃 Histórico de lançamentos
