@@ -2,7 +2,7 @@ import numpy as np
 
 # # Criação de uma matriz 2x2
 # a = np.array([[1, 2], [3, 4]])
-# # Transposição de uma matriz
+
 # b = a.T
 #
 # print(a)
