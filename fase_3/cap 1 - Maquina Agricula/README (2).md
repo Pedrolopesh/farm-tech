@@ -37,7 +37,7 @@ Utilizou-se o SELECT* e demonstrou-se a operacionalização de consultas SQL*
 
 
 ## 📁 Estrutura de pastas
-.github: https://github.com/Pedrolopesh/farm-tech/blob/master/fase_3/Fase%203_CAP%201
+.github: [https://github.com/Pedrolopesh/farm-tech/blob/master/fase_3/Fase%203_CAP%201](https://github.com/Pedrolopesh/farm-tech/tree/master/fase_3/cap%201%20-%20Maquina%20Agricula)
 
 
 ## 🔧 Como executar os códigos
@@ -60,6 +60,7 @@ Utilizou-se o SELECT* e demonstrou-se a operacionalização de consultas SQL*
 <img width="1919" height="1023" alt="image" src="https://github.com/user-attachments/assets/ef13c1a0-a5f2-4854-af68-0912e97705b9" />
 
 ## PASSO 4: SQL
+```
 -- SELECIONAR AS PRIMEIRAS 10 LINHAS
 SELECT * FROM sensores
 FETCH FIRST 10 ROWS ONLY;
@@ -77,7 +78,9 @@ ORDER BY umidade DESC;
 -- Selecionar as linhas que possuem PH > 4,4
 SELECT *
 FROM sensores
-WHERE ph > 4.4;
+WHERE ph > 4.4
+```
+
 
 ## PASSO 5: USO DE SELECT* PARA COMANDOS - EXECUÇÃO E APRESENTAÇÃO DE CONSULTAS SQL CORRETAS E FUNCIONAIS
 <img width="1919" height="1021" alt="image" src="https://github.com/user-attachments/assets/dde38dc2-f193-4ed1-b4cf-4bb406c6fda2" />
