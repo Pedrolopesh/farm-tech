@@ -1,11 +1,10 @@
 import pandas as pd
 #
 # # === Series ===
-# # Criando uma Series a partir de uma lista
+# Criando uma Series a partir de uma lista
 # s = pd.Series([1, 2, 3, 4, 5])
-#
 # print(s)
-#
+
 # # Acesso à posição de índice 4
 # print(s[4]) # Saída: 5
 
