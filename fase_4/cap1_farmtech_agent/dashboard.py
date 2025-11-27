@@ -18,7 +18,7 @@ st.set_page_config(page_title="FarmTech Solutions - Fase 4", layout="wide")
 @st.cache_resource  # Isso faz o carregamento ser rápido
 def carregar_modelo():
     try:
-        return joblib.load('modelo_farmtech.joblib')
+        return joblib.load('./fase_4/cap1_farmtech_agent/modelo_farmtech.joblib')
     except:
         st.error(
             "Erro: Arquivo 'modelo_farmtech.joblib' não encontrado. Rode a Etapa 2 primeiro.")
@@ -112,7 +112,7 @@ if st.sidebar.button("📊 Analisar Safra"):
 
     # Carregar os dados originais para mostrar gráficos
     try:
-        df = pd.read_csv('dados_agricolas_farmtech.csv')
+        df = pd.read_csv('./fase_4/cap1_farmtech_agent/dados_agricolas_farmtech.csv')
 
         # Filtrar apenas a cultura selecionada para o gráfico fazer sentido
         df_filtrado = df[df['Cultura'] == cultura_selecionada]
