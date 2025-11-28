@@ -1,163 +1,224 @@
+# ============================================================
+# FARMTECH SOLUTIONS – DASHBOARD FINAL (FASE 4)
+# IA + Regressão Clássica + Análises Comparativas + Sugestões
+# + Gráficos da Regressão Múltipla
+# ============================================================
+
 import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-# Importar nossa lógica de negócio (o arquivo regras_negocio.py)
-# Isso mostra "Modularização" e organização de código
 from regras_negocio import processar_dados_sensor
 
-# Configuração da página (título e layout)
+
 st.set_page_config(page_title="FarmTech Solutions - Fase 4", layout="wide")
+st.title("🚜 FarmTech Solutions – Agricultura Cognitiva")
 
-# --- 1. CARREGAR O CÉREBRO DA IA ---
+
+# ------------------------------------------------------------
+# CARREGAR DADOS E MODELO
+# ------------------------------------------------------------
+@st.cache_data
+def carregar_dados():
+    caminhos = [
+        "./fase_4/cap1_farmtech_agent/dados_agricolas_farmtech.csv",
+        "./dados_agricolas_farmtech.csv"
+    ]
+    for c in caminhos:
+        try:
+            return pd.read_csv(c)
+        except:
+            continue
+    st.error("❌ Não encontrei 'dados_agricolas_farmtech.csv'.")
+    return None
 
 
-@st.cache_resource  # Isso faz o carregamento ser rápido
+@st.cache_resource
 def carregar_modelo():
     try:
-        return joblib.load('./fase_4/cap1_farmtech_agent/modelo_farmtech.joblib')
+        return joblib.load("./fase_4/cap1_farmtech_agent/modelo_farmtech.joblib")
     except:
-        st.error(
-            "Erro: Arquivo 'modelo_farmtech.joblib' não encontrado. Rode a Etapa 2 primeiro.")
+        st.error("❌ Não encontrei 'modelo_farmtech.joblib'.")
         return None
 
 
-modelo = carregar_modelo()
+df = carregar_dados()
+modelo_ia = carregar_modelo()
 
-# --- 2. BARRA LATERAL (SIMULAÇÃO DE SENSORES) ---
-st.sidebar.header("📡 Painel de Controle (Sensores IoT)")
-st.sidebar.markdown("Simule as condições do campo abaixo:")
 
-# Inputs do usuário
-cultura_selecionada = st.sidebar.selectbox("Cultura:", ["Soja", "Acai"])
-umidade = st.sidebar.slider("💧 Umidade do Solo (%)", 0.0, 100.0, 60.0)
+# ------------------------------------------------------------
+# REGRESSÃO CLÁSSICA
+# ------------------------------------------------------------
+def regressao_classica(df_cultura):
+
+    features = ['Umidade_Solo', 'pH_Solo', 'Temperatura']
+    target = 'Rendimento_Colheita'
+
+    X = df_cultura[features]
+    y = df_cultura[target]
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
+
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+
+    return {
+        "model": model,
+        "mae": mean_absolute_error(y_test, y_pred),
+        "mse": mean_squared_error(y_test, y_pred),
+        "rmse": np.sqrt(mean_squared_error(y_test, y_pred)),
+        "r2": r2_score(y_test, y_pred),
+        "coefs": dict(zip(features, model.coef_)),
+        "intercept": model.intercept_
+    }
+
+
+# ------------------------------------------------------------
+# SIDEBAR – Inputs do usuário
+# ------------------------------------------------------------
+st.sidebar.header("📡 Sensores IoT (Simulação)")
+
+cultura = st.sidebar.selectbox("Cultura", ["Soja", "Acai"])
+umidade = st.sidebar.slider("💧 Umidade (%)", 0.0, 100.0, 60.0)
 ph = st.sidebar.slider("🧪 pH do Solo", 0.0, 14.0, 6.5)
-temperatura = st.sidebar.slider("🌡️ Temperatura (°C)", 0.0, 50.0, 25.0)
-nutrientes = st.sidebar.slider("🌿 Nível de Nutrientes (0-10)", 0.0, 10.0, 5.0)
+temperatura = st.sidebar.slider("🌡 Temperatura (°C)", 0.0, 50.0, 25.0)
+nutrientes = st.sidebar.slider("🌿 Nutrientes", 0.0, 10.0, 5.0)
 
-# Botão para processar
-if st.sidebar.button("📊 Analisar Safra"):
+btn = st.sidebar.button("📊 Analisar Safra")
 
-    # --- 3. PREPARAÇÃO DOS DADOS PARA A IA ---
-    # A IA precisa dos dados na mesma ordem que aprendeu:
-    # ['Umidade_Solo', 'pH_Solo', 'Temperatura', 'Nivel_Nutrientes', 'Cultura_Soja']
 
-    # Converter Cultura para número (Lógica do One-Hot Encoding)
-    is_soja = 1 if cultura_selecionada == "Soja" else 0
+# ============================================================
+# EXECUÇÃO DA ANÁLISE
+# ============================================================
+if btn:
 
-    # Criar o DataFrame com UMA linha (os dados atuais)
-    dados_entrada = pd.DataFrame({
-        'Umidade_Solo': [umidade],
-        'pH_Solo': [ph],
-        'Temperatura': [temperatura],
-        'Nivel_Nutrientes': [nutrientes],
-        'Cultura_Soja': [is_soja]
-    })
+    # Entrada p/ IA
+    entrada = pd.DataFrame([{
+        "Umidade_Solo": umidade,
+        "pH_Solo": ph,
+        "Temperatura": temperatura,
+        "Nivel_Nutrientes": nutrientes,
+        "Cultura_Soja": 1 if cultura == "Soja" else 0
+    }])
 
-    # --- 4. PREVISÃO DA IA ---
-    if modelo:
-        previsao_rendimento = modelo.predict(dados_entrada)[0]
-    else:
-        previsao_rendimento = 0
+    st.header(f"🌱 Relatório da Cultura: {cultura}")
 
-    # --- 5. CONSULTAR O AGRÔNOMO DIGITAL (Regras de Negócio) ---
-    alertas, acoes = processar_dados_sensor(
-        cultura_selecionada, umidade, ph, temperatura, nutrientes)
+    # ============================================================
+    # PREVISÃO IA
+    # ============================================================
+    previsao_ia = modelo_ia.predict(entrada)[0]
 
-    # --- 6. EXIBIÇÃO NA TELA PRINCIPAL ---
-
-    # Cabeçalho
-    st.title(f"🌱 Relatório de Análise: {cultura_selecionada}")
-    st.markdown("---")
-
-    # Colunas para organizar o visual
     col1, col2 = st.columns(2)
 
     with col1:
-        st.subheader("🔮 Previsão de Produtividade")
-        # Mostra o número grande (Métrica)
-        st.metric(
-            label="Rendimento Esperado (Ton/ha)",
-            value=f"{previsao_rendimento:.2f}",
-            delta="Baseado em IA"
-        )
+        st.subheader("🔮 Previsão via IA (RandomForest)")
+        st.metric("Rendimento Esperado (Ton/ha)", f"{previsao_ia:.2f}")
+        st.progress(min(previsao_ia / 35, 1))
 
-        # Barra de progresso visual para o rendimento
-        # Assumindo que 35 ton/ha é um máximo teórico excelente para nosso exemplo
-        progresso = min(previsao_rendimento / 35, 1.0)
-        st.progress(progresso)
+    alertas, acoes = processar_dados_sensor(cultura, umidade, ph, temperatura, nutrientes)
 
     with col2:
         st.subheader("📋 Diagnóstico & Recomendações")
-
-        # Se não houver alertas, mostra sucesso
         if not alertas:
-            st.success("✅ Tudo certo! Nenhuma ação crítica necessária.")
-            for acao in acoes:
-                st.info(acao)
+            st.success("Nenhuma anomalia detectada.")
         else:
-            # Mostra alertas e ações corretivas
-            for alerta in alertas:
-                st.warning(alerta)
-            for acao in acoes:
-                st.error(f"🛠️ AÇÃO RECOMENDADA: {acao}")
+            for a in alertas:
+                st.warning(a)
+        for ac in acoes:
+            st.info(f"👉 {ac}")
 
+    # ============================================================
+    # Análise Histórica
+    # ============================================================
     st.markdown("---")
+    st.subheader("📈 Histórico Real (Dataset)")
 
-    # --- 7. GRÁFICOS E INSIGHTS ---
-    st.subheader("📈 Análise Comparativa (Base Histórica)")
+    df_c = df[df["Cultura"] == cultura]
 
-    # Carregar os dados originais para mostrar gráficos
-    try:
-        df = pd.read_csv('./fase_4/cap1_farmtech_agent/dados_agricolas_farmtech.csv')
+    fig, ax = plt.subplots(1, 2, figsize=(15, 5))
+    sns.scatterplot(df_c, x="Umidade_Solo", y="Rendimento_Colheita", ax=ax[0], color="green")
+    ax[0].axvline(umidade, color="red", linestyle="--")
 
-        # Filtrar apenas a cultura selecionada para o gráfico fazer sentido
-        df_filtrado = df[df['Cultura'] == cultura_selecionada]
+    sns.scatterplot(df_c, x="pH_Solo", y="Rendimento_Colheita", ax=ax[1], color="orange")
+    ax[1].axvline(ph, color="red", linestyle="--")
 
-        fig, ax = plt.subplots(1, 2, figsize=(15, 5))
+    st.pyplot(fig)
 
-        # Gráfico 1: Dispersão (Umidade vs Rendimento)
-        sns.scatterplot(data=df_filtrado, x='Umidade_Solo',
-                        y='Rendimento_Colheita', ax=ax[0], color='green')
-        ax[0].set_title(
-            f"Impacto da Umidade no Rendimento ({cultura_selecionada})")
-        # Desenhar uma linha vermelha onde está o sensor ATUAL
-        ax[0].axvline(umidade, color='red', linestyle='--',
-                      label='Sua Leitura Atual')
-        ax[0].legend()
+    # ============================================================
+    # REGRESSÃO CLÁSSICA + GRÁFICOS MULTIPLOS
+    # ============================================================
+    st.markdown("---")
+    st.header("🔬 Regressão Linear Clássica (Comparativo Matemático)")
 
-        # Gráfico 2: Dispersão (pH vs Rendimento)
-        sns.scatterplot(data=df_filtrado, x='pH_Solo',
-                        y='Rendimento_Colheita', ax=ax[1], color='orange')
-        ax[1].set_title(f"Impacto do pH no Rendimento ({cultura_selecionada})")
-        ax[1].axvline(ph, color='red', linestyle='--',
-                      label='Sua Leitura Atual')
-        ax[1].legend()
+    resultados = regressao_classica(df_c)
 
-        st.pyplot(fig)
+    entrada_reg = entrada[['Umidade_Solo', 'pH_Solo', 'Temperatura']]
+    previsao_reg = resultados["model"].predict(entrada_reg)[0]
 
-        st.caption(
-            f"Os gráficos mostram 500 amostras históricas de {cultura_selecionada}. A linha vermelha indica a posição atual dos seus sensores.")
+    colA, colB = st.columns(2)
+    with colA:
+        st.metric("Previsão pela Regressão Linear", f"{previsao_reg:.2f}")
 
-    except Exception as e:
-        st.warning(
-            "Não foi possível carregar os gráficos históricos. Verifique o arquivo CSV.")
+    with colB:
+        st.metric("Diferença IA - Regressão", f"{previsao_ia - previsao_reg:.2f}")
+
+    # Métricas
+    colM1, colM2, colM3, colM4 = st.columns(4)
+    colM1.metric("R²", f"{resultados['r2']:.3f}")
+    colM2.metric("MAE", f"{resultados['mae']:.2f}")
+    colM3.metric("MSE", f"{resultados['mse']:.2f}")
+    colM4.metric("RMSE", f"{resultados['rmse']:.2f}")
+
+    # ============================================================
+    # GRÁFICOS DA REGRESSÃO MÚLTIPLA (NOVO)
+    # ============================================================
+
+    st.subheader("📉 Regressão Linear Múltipla (Gráficos Contínuos)")
+
+    coef_u = resultados["coefs"]["Umidade_Solo"]
+    coef_ph = resultados["coefs"]["pH_Solo"]
+    coef_temp = resultados["coefs"]["Temperatura"]
+    intercept = resultados["intercept"]
+
+    # Geração das linhas da regressão
+    um_array = np.linspace(df_c["Umidade_Solo"].min(), df_c["Umidade_Solo"].max(), 200)
+    ph_array = np.linspace(df_c["pH_Solo"].min(), df_c["pH_Solo"].max(), 200)
+    temp_array = np.linspace(df_c["Temperatura"].min(), df_c["Temperatura"].max(), 200)
+
+    # Mantemos as outras variáveis fixas no valor do sensor
+    y_umidade = intercept + coef_u * um_array + coef_ph * ph + coef_temp * temperatura
+    y_ph = intercept + coef_u * umidade + coef_ph * ph_array + coef_temp * temperatura
+    y_temp = intercept + coef_u * umidade + coef_ph * ph + coef_temp * temp_array
+
+    fig2, ax = plt.subplots(1, 3, figsize=(22, 6))
+
+    # Gráfico 1
+    ax[0].scatter(df_c["Umidade_Solo"], df_c["Rendimento_Colheita"], color="gray", alpha=0.5)
+    ax[0].plot(um_array, y_umidade, color="red")
+    ax[0].set_title("Regressão Múltipla – Umidade vs Rendimento")
+
+    # Gráfico 2
+    ax[1].scatter(df_c["pH_Solo"], df_c["Rendimento_Colheita"], color="gray", alpha=0.5)
+    ax[1].plot(ph_array, y_ph, color="blue")
+    ax[1].set_title("Regressão Múltipla – pH vs Rendimento")
+
+    # Gráfico 3
+    ax[2].scatter(df_c["Temperatura"], df_c["Rendimento_Colheita"], color="gray", alpha=0.5)
+    ax[2].plot(temp_array, y_temp, color="green")
+    ax[2].set_title("Regressão Múltipla – Temperatura vs Rendimento")
+
+    st.pyplot(fig2)
+
 
 else:
-    # Tela inicial antes de clicar no botão
-    st.title("🚜 FarmTech Solutions")
-    st.markdown("""
-    ### Bem-vindo ao Sistema de Apoio à Decisão
-    
-    Este dashboard utiliza **Inteligência Artificial** para prever a produtividade da sua lavoura 
-    e sugerir ações de manejo em tempo real.
-    
-    **Como usar:**
-    1. Ajuste os parâmetros dos sensores na barra lateral à esquerda.
-    2. Clique em **'Analisar Safra'**.
-    3. Receba previsões de rendimento e sugestões de correção de solo/irrigação.
-    """)
-    st.image("https://img.freepik.com/free-photo/smart-farming-with-iot-futuristic-agriculture-concept_53876-124626.jpg?w=1380", caption="Agricultura 4.0")
+    st.write("### Ajuste os sensores e clique em **Analisar Safra**.")
+    st.image("https://img.freepik.com/free-photo/smart-farming-iot-concept_53876-124626.jpg")

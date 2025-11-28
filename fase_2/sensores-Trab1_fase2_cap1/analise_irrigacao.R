@@ -1,3 +1,5 @@
+install.packages("rpart.plot")
+
 # Carregar as bibliotecas necessárias
 library(readr)
 library(rpart)
@@ -20,7 +22,7 @@ tipos_colunas <- cols(
 
 # Ler o arquivo CSV usando os tipos de coluna que definimos.
 # Lembre-se de ajustar o caminho se necessário.
-dados_irrigacao <- read_csv("sensores-Trab1_fase2_cap1/historico_irrigacao.csv", col_types = tipos_colunas)
+dados_irrigacao <- read_csv("historico_irrigacao.csv", col_types = tipos_colunas)
 
 
 # --- O RESTO DO CÓDIGO CONTINUA O MESMO ---
