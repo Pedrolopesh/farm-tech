@@ -12,7 +12,6 @@
 
 
 ## 👥 Informações do Projeto
-
 ### Equipe
 
 | Nome | RM | E-mail | Responsabilidade |
