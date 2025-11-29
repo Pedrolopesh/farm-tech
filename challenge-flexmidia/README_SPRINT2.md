@@ -6,6 +6,7 @@
 
 *"Pipeline completo: da simulação de sensores à predição com ML"*
 
+**Repositório** https://github.com/Pedrolopesh/farm-tech/tree/master/challenge-flexmidia
 ---
 
 ## 📋 Índice
