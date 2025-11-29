@@ -1,0 +1,80 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#2196F3'}}}%%
+
+flowchart LR
+    subgraph ENTRADA["📥 ENTRADA DE DADOS"]
+        A1["ESP32-CAM<br/>Sensor de Presença"]
+        A2["Interface Touch"]
+        A3["Microfone"]
+        A4["Script Simulação<br/>simulated_sensors.py"]
+    end
+
+    subgraph COLETA["📊 COLETA"]
+        B1["timestamp"]
+        B2["ativacao (0/1)"]
+        B3["tipo_interacao"]
+        B4["tempo_permanencia"]
+        B5["sessao_id"]
+    end
+
+    subgraph ARMAZENAMENTO["🗄️ ARMAZENAMENTO"]
+        C1["CSV Temporário<br/>simulated_sensors.csv"]
+        C2["SQLite<br/>totem.db"]
+        C3["Tabela interacoes"]
+    end
+
+    subgraph PROCESSAMENTO["⚙️ PROCESSAMENTO"]
+        D1["Limpeza de Dados"]
+        D2["Remoção Duplicados"]
+        D3["Validação Campos"]
+        D4["Feature Engineering"]
+    end
+
+    subgraph ANALISE["📈 ANÁLISE"]
+        E1["Estatísticas<br/>Descritivas"]
+        E2["Visualizações"]
+        E3["KPIs"]
+    end
+
+    subgraph ML["🤖 MACHINE LEARNING"]
+        F1["Preparação<br/>Features"]
+        F2["Treinamento<br/>RandomForest"]
+        F3["Avaliação<br/>Métricas"]
+        F4["model.pkl"]
+    end
+
+    subgraph SAIDA["📊 SAÍDA"]
+        G1["Dashboard<br/>Streamlit"]
+        G2["Gráficos PNG"]
+        G3["Predições<br/>Tempo Real"]
+        G4["Relatórios"]
+    end
+
+    %% Conexões
+    A1 & A2 & A3 -->|"Produção"| B1 & B2 & B3 & B4 & B5
+    A4 -->|"Simulação"| B1 & B2 & B3 & B4 & B5
+
+    B1 & B2 & B3 & B4 & B5 --> C1
+    C1 -->|"init_db.py"| C2
+    C2 --> C3
+
+    C3 --> D1
+    D1 --> D2 --> D3 --> D4
+
+    D4 --> E1 & E2 & E3
+    D4 --> F1
+
+    F1 --> F2 --> F3 --> F4
+
+    E1 & E2 & E3 --> G1
+    E2 --> G2
+    F4 --> G3
+    E3 --> G4
+
+    %% Estilos
+    style ENTRADA fill:#E3F2FD
+    style COLETA fill:#E8F5E9
+    style ARMAZENAMENTO fill:#FFF3E0
+    style PROCESSAMENTO fill:#FCE4EC
+    style ANALISE fill:#F3E5F5
+    style ML fill:#FFEBEE
+    style SAIDA fill:#E0F7FA

@@ -1,0 +1,76 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#4CAF50', 'secondaryColor': '#2196F3', 'tertiaryColor': '#FF9800'}}}%%
+
+flowchart TB
+    subgraph TOTEM["🖥️ TOTEM FÍSICO"]
+        direction TB
+        ESP32["ESP32-CAM<br/>Detecção de Presença"]
+        MIC["🎤 Microfone<br/>Entrada de Voz"]
+        TOUCH["👆 Tela Touch<br/>Interface Tátil"]
+        SPEAKER["🔊 Alto-falante<br/>Saída de Áudio"]
+    end
+
+    subgraph SIMULACAO["📊 SIMULAÇÃO DE DADOS"]
+        SIM_SCRIPT["simulated_sensors.py<br/>Geração de 200 registros"]
+        CSV["simulated_sensors.csv<br/>Dataset Simulado"]
+        SIM_SCRIPT --> CSV
+    end
+
+    subgraph DATABASE["🗄️ BANCO DE DADOS"]
+        INIT_DB["init_db.py<br/>Inicialização"]
+        SQLITE[("totem.db<br/>SQLite")]
+        INIT_DB --> SQLITE
+    end
+
+    subgraph ANALYSIS["📈 ANÁLISE DE DADOS"]
+        ANALYSIS_SCRIPT["data_analysis.py<br/>Limpeza e Análise"]
+        PLOTS["plots/<br/>Visualizações PNG"]
+        CLEAN_DATA["cleaned_data.csv<br/>Dados Processados"]
+        ANALYSIS_SCRIPT --> PLOTS
+        ANALYSIS_SCRIPT --> CLEAN_DATA
+    end
+
+    subgraph ML["🤖 MACHINE LEARNING"]
+        TRAIN["train_model.py<br/>Treinamento"]
+        MODEL["model.pkl<br/>Modelo Salvo"]
+        ML_PLOTS["plots/<br/>Métricas ML"]
+        TRAIN --> MODEL
+        TRAIN --> ML_PLOTS
+    end
+
+    subgraph DASHBOARD["📊 DASHBOARD"]
+        STREAMLIT["app.py<br/>Streamlit"]
+        KPIS["KPIs em Tempo Real"]
+        GRAFICOS["Gráficos Interativos"]
+        PREDICAO["Predição ML"]
+    end
+
+    %% Fluxo de dados
+    TOTEM -->|"Dados Reais<br/>(Futuro)"| DATABASE
+    SIMULACAO -->|"Dados Simulados"| DATABASE
+    CSV -->|"Leitura CSV"| INIT_DB
+    
+    DATABASE -->|"Query SQL"| ANALYSIS
+    SQLITE -->|"Dados"| ANALYSIS_SCRIPT
+    
+    DATABASE -->|"Treino"| ML
+    SQLITE -->|"Features"| TRAIN
+    
+    DATABASE -->|"Consulta"| DASHBOARD
+    MODEL -->|"Modelo"| DASHBOARD
+    
+    STREAMLIT --> KPIS
+    STREAMLIT --> GRAFICOS
+    STREAMLIT --> PREDICAO
+
+    %% Estilos
+    classDef hardware fill:#E3F2FD,stroke:#1976D2,stroke-width:2px
+    classDef data fill:#E8F5E9,stroke:#388E3C,stroke-width:2px
+    classDef process fill:#FFF3E0,stroke:#F57C00,stroke-width:2px
+    classDef ml fill:#FCE4EC,stroke:#C2185B,stroke-width:2px
+    classDef dashboard fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px
+
+    class ESP32,MIC,TOUCH,SPEAKER hardware
+    class SIM_SCRIPT,CSV,INIT_DB,SQLITE data
+    class ANALYSIS_SCRIPT,PLOTS,CLEAN_DATA process
+    class TRAIN,MODEL,ML_PLOTS ml
+    class STREAMLIT,KPIS,GRAFICOS,PREDICAO dashboard
