@@ -323,13 +323,13 @@ Classificar o tipo de interação (`curto` ou `longo`) baseado nas característi
 
 ### Features Utilizadas
 
-| Feature | Descrição | Tipo |
-|---------|-----------|------|
-| `tempo_permanencia` | Tempo da interação em segundos | Numérico |
-| `hora` | Hora do dia (0-23) | Numérico |
-| `dia_semana` | Dia da semana (0-6) | Numérico |
-| `horario_pico` | Flag para horário de pico | Binário |
-| `fim_semana` | Flag para fim de semana | Binário |
+    | Feature | Descrição | Tipo |
+    |---------|-----------|------|
+    | `tempo_permanencia` | Tempo da interação em segundos | Numérico |
+    | `hora` | Hora do dia (0-23) | Numérico |
+    | `dia_semana` | Dia da semana (0-6) | Numérico |
+    | `horario_pico` | Flag para horário de pico | Binário |
+    | `fim_semana` | Flag para fim de semana | Binário |
 
 ### Modelos Treinados
 

@@ -1,128 +1,115 @@
-# EDUBOT - Sprint 3: Pipeline de Dados e Machine Learning
+# EDUBOT - Sprint 3: Inteligência Preditiva e Engajamento Avançado
+### Challenge FlexMedia - Sprint 3
+**Tecnólogo em Inteligência Artificial - FIAP** *"Modelagem de dados complexos e predição de engajamento em tempo real"*
 
-**Challenge FlexMedia - Sprint 3**
+**Repositório:** [https://github.com/Pedrolopesh/farm-tech](https://github.com/Pedrolopesh/farm-tech)
 
-**Tecnólogo em Inteligência Artificial - FIAP**
-
-*"Pipeline completo: da simulação de sensores à predição com ML"*
-
-**Repositório** https://github.com/Pedrolopesh/farm-tech/tree/master/challenge-flexmidia
 ---
 
 ## 📋 Índice
-
-1. [Visão Geral da Sprint 2](#visão-geral-da-sprint-2)
-2. [Estrutura do Projeto](#estrutura-do-projeto)
-3. [Fluxo de Dados](#fluxo-de-dados)
-4. [Guia de Execução](#guia-de-execução)
-5. [Componentes do Sistema](#componentes-do-sistema)
-6. [Machine Learning](#machine-learning)
-7. [Dashboard](#dashboard)
-8. [Diagramas](#diagramas)
-9. [Resultados e Métricas](#resultados-e-métricas)
-10. [Próximos Passos](#próximos-passos)
+1. [Visão Geral da Sprint 3](#-visão-geral-da-sprint-3)
+2. [Novidades desta Versão](#-novidades-desta-versão)
+3. [Estrutura do Projeto](#-estrutura-do-projeto)
+4. [Guia de Execução](#-guia-de-execução)
+5. [Machine Learning Avançado](#-machine-learning-avançado)
+6. [Dashboard de Monitoramento](#-dashboard-de-monitoramento)
+7. [Resultados e Métricas](#-resultados-e-métricas)
+8. [Equipe](#-equipe)
 
 ---
 
 ## 🎯 Visão Geral da Sprint 3
-
-A Sprint 3 do EDUBOT implementa o **pipeline completo de dados**, desde a simulação dos sensores do totem até a predição de tipos de interação com Machine Learning.
+A Sprint 3 do EDUBOT marca a evolução do sistema de monitoramento para uma plataforma de **Inteligência de Dados**. Expandimos a base de dados para 1.500 registros e introduzimos métricas de comportamento humano (frequência de toques) para classificar o nível de interesse do produtor rural.
 
 ### Objetivos Alcançados
+* ✅ **Big Data Simulação:** Expansão para 1.500 registros cobrindo o período de 2025 a 2026.
+* ✅ **Novas Variáveis:** Inclusão de `toques_por_minuto` e `velocidade_toques` (alta/baixa).
+* ✅ **ML de Alta Precisão:** Implementação do Random Forest com 100% de acurácia nos padrões de treino.
+* ✅ **Dashboard Interativo:** Interface Streamlit com filtros de data, gráficos de tendência e simulador de IA.
+* ✅ **Persistência Evoluída:** Reestruturação do banco SQLite para suportar as novas colunas de engajamento.
 
-- ✅ **Simulação de Dados**: Geração de 1500 registros simulando interações com o totem
-- ✅ **Banco de Dados**: SQLite para persistência e consultas estruturadas
-- ✅ **Análise de Dados**: Limpeza, validação e visualizações estatísticas
-- ✅ **Machine Learning**: Modelo de classificação para prever tipo de interação
-- ✅ **Dashboard Interativo**: Interface Streamlit com KPIs e gráficos em tempo real
-- ✅ **Documentação Técnica**: Diagramas e documentação completa
+---
 
-### Tecnologias Utilizadas
-
-| Categoria | Tecnologias |
-|-----------|-------------|
-| Linguagem | Python 3.11+ |
-| Banco de Dados | SQLite |
-| Análise | Pandas, NumPy, Matplotlib, Seaborn |
-| Machine Learning | Scikit-learn, Joblib |
-| Dashboard | Streamlit, Plotly |
-| Documentação | Mermaid, Markdown |
+## ✨ Novidades desta Versão
+Diferente da Sprint 2, agora monitoramos não apenas o "tempo", mas a **intensidade** da interação:
+* **Interação Média:** Nova categoria adicionada para maior granularidade.
+* **Análise de Toques:** O sistema agora diferencia um usuário curioso (muitos toques) de um usuário passivo.
+* **Filtros Temporais:** O Dashboard permite selecionar períodos específicos no calendário.
 
 ---
 
 ## 📁 Estrutura do Projeto
-
-```
+```text
 challenge-flexmidia/
 ├── sensors_simulation/
-│   ├── simulated_sensors.py      # Script de geração de dados
-│   └── simulated_sensors.csv     # Dataset simulado (200 registros)
-│
+│   ├── simulated_sensors.py      # Script v3.0 (1500 registros + métricas de toque)
+│   └── edubot_sensor_data.csv    # Novo Dataset expandido
 ├── database/
-│   ├── init_db.py                # Inicialização do banco SQLite
-│   └── totem.db                  # Banco de dados SQLite
-│
-├── analysis/
-│   ├── data_analysis.py          # Análise e limpeza de dados
-│   ├── cleaned_data.csv          # Dados processados
-│   └── plots/                    # Gráficos gerados
-│       ├── interacoes_por_dia.png
-│       ├── tipos_interacao.png
-│       ├── tempo_permanencia.png
-│       ├── distribuicao_horaria.png
-│       └── heatmap_uso.png
-│
+│   ├── init_db.py                # Script de recriação do banco com novas colunas
+│   └── totem.db                  # SQLite atualizado
 ├── ml_model/
-│   ├── train_model.py            # Treinamento do modelo
-│   ├── model.pkl                 # Modelo serializado
-│   └── plots/                    # Métricas do modelo
-│       ├── confusion_matrix_*.png
-│       ├── feature_importance_*.png
-│       └── model_comparison.png
-│
+│   ├── train_model.py            # Treinamento do Random Forest
+│   └── modelo_edubot.pkl         # Modelo serializado de alta performance
+├── analysis/
+│   ├── data_analysis.py          # Gerador de gráficos de engajamento
+│   └── plots/                    # Novas análises (Sunburst, Timeline)
 ├── dashboard/
-│   └── app.py                    # Dashboard Streamlit
-│
-├── docs/
-│   └── diagramas/
-│       ├── arquitetura-sprint2.mmd
-│       ├── fluxo-dados-sprint2.mmd
-│       ├── pipeline-ml-sprint2.mmd
-│       └── README_SPRINT2.md
-│
-├── requirements.txt              # Dependências Python
-└── README_SPRINT2.md             # Este arquivo
+│   └── app.py                    # Dashboard Pro com filtros e simulador de IA
+└── README_SPRINT3.md             # Este arquivo
 ```
+
+---
+
+# EDUBOT - Sprint 3: Inteligência Preditiva e Engajamento Avançado
+### Challenge FlexMedia - Sprint 3
+**Tecnólogo em Inteligência Artificial - FIAP** *"Modelagem de dados complexos e predição de engajamento em tempo real"*
+
+**Repositório:** [https://github.com/Pedrolopesh/farm-tech](https://github.com/Pedrolopesh/farm-tech)
+
+---
+
+## 📋 Índice
+1. [Visão Geral da Sprint 3](#-visão-geral-da-sprint-3)
+2. [Fluxo de Dados](#-fluxo-de-dados)
+3. [Dados Coletados e Simulados](#-dados-coletados-e-simulados)
+4. [Estrutura do Projeto](#-estrutura-do-projeto)
+5. [Guia de Execução](#-guia-de-execução)
+6. [Machine Learning Avançado](#-machine-learning-avançado)
+7. [Dashboard de Monitoramento](#-dashboard-de-monitoramento)
+8. [Equipe](#-equipe)
+
+---
+
+## 🎯 Visão Geral da Sprint 3
+A Sprint 3 do EDUBOT marca a evolução do sistema de monitoramento para uma plataforma de **Inteligência de Dados**. Expandimos a base de dados para 1.500 registros e introduzimos métricas de comportamento humano (frequência de toques) para classificar o nível de interesse do produtor rural.
 
 ---
 
 ## 🔄 Fluxo de Dados
-
-```
+```text
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
 │   SIMULAÇÃO     │────▶│  BANCO DADOS    │────▶│    ANÁLISE      │
-│ 1500 registros   │     │    SQLite       │     │   + Limpeza     │
+│ 1500 registros  │     │    SQLite       │     │   EDA + Plots   │
 └─────────────────┘     └─────────────────┘     └─────────────────┘
-                                                        │
-                        ┌───────────────────────────────┘
-                        ▼
-              ┌─────────────────┐     ┌─────────────────┐
-              │  MACHINE LEARN  │────▶│   DASHBOARD     │
-              │  RandomForest   │     │   Streamlit     │
-              └─────────────────┘     └─────────────────┘
+                                                       │
+         ┌─────────────────────────────────────────────┘
+         ▼
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│  MACHINE LEARN  │────▶│    MODELO       │────▶│   DASHBOARD     │
+│  Random Forest  │     │  (modelo.pkl)   │     │   Streamlit     │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
 ```
-
 ### Dados Coletados/Simulados
 
 | Campo | Tipo | Descrição |
-|-------|------|-----------|
-| `timestamp` | DATETIME | Data e hora da interação |
-| `ativacao` | INTEGER | Sensor ativado (0/1) |
-| `tipo_interacao` | TEXT | curto / longo / nenhuma |
-| `tempo_permanencia` | INTEGER | Tempo em segundos |
-| `sessao_id` | TEXT | ID único da sessão |
-
----
+| :--- | :--- | :--- |
+| **timestamp** | DATETIME | Data e hora da interação (Simulado 2025-2026) |
+| **session_id** | TEXT | ID único da sessão (UUID) |
+| **status_ativacao** | INTEGER | Sensor ativado (1) ou Standby (0) |
+| **tempo_permanencia_seg** | INTEGER | Tempo total da interação em segundos |
+| **toques_por_minuto** | FLOAT | Frequência de toques na tela por minuto |
+| **velocidade_toques** | TEXT | Classificação do ritmo (lenta, média, alta) |
+| **tipo_interacao** | TEXT | **Target:** Classificação da experiência (curta/média/longa) |
 
 ## 🚀 Guia de Execução
 
@@ -132,45 +119,24 @@ challenge-flexmidia/
 # Python 3.11 ou superior
 python --version
 
-# Criar ambiente virtual (recomendado)
-python -m venv venv
-source venv/bin/activate  # macOS/Linux
-# ou: venv\Scripts\activate  # Windows
-```
-
-### Instalação
-
-```bash
+## 🚀 Instalação
 # Navegar até o diretório do projeto
 cd challenge-flexmidia
 
 # Instalar dependências
-pip install -r requirements.txt
-```
+pip install streamlit plotly scikit-learn joblib pandas
 
 ### Execução Passo a Passo
-
 #### 1️⃣ Gerar Dados Simulados
-
 ```bash
 python sensors_simulation/simulated_sensors.py
-```
 
 **Saída esperada:**
 ```
-🚀 Iniciando simulação de dados do EDUBOT...
-✅ 200 registros gerados com sucesso!
-
-📊 Estatísticas do Dataset:
-   - Total de ativações: ~190
-   - Taxa de ativação: ~95%
-   - Interações curtas: ~114
-   - Interações longas: ~76
-   - Tempo médio de permanência: ~85s
-
-💾 Dataset salvo em: sensors_simulation/simulated_sensors.csv
+🚀 Iniciando simulação de dados do EDUBOT v3.0...
+✅ 1500 registros gerados com sucesso (Período: 2025-2026)!
+💾 Dataset salvo em: sensors_simulation/edubot_sensor_data.csv
 ```
-
 #### 2️⃣ Inicializar Banco de Dados
 
 ```bash
@@ -179,15 +145,11 @@ python database/init_db.py
 
 **Saída esperada:**
 ```
-🗃️  Criando banco de dados SQLite...
-✅ Banco de dados criado em: database/totem.db
+🗃️  Atualizando banco de dados SQLite...
+✅ Banco de dados sincronizado em: database/totem.db
+📥 Carregando 1500 registros para o banco...
+✅ Sucesso!
 
-📥 Carregando dados do CSV para o banco...
-✅ 200 registros inseridos com sucesso!
-
-📊 Estatísticas do Banco de Dados:
-   - Total de registros: 200
-   - Taxa de ativação: 95.0%
 ```
 
 #### 3️⃣ Executar Análise de Dados
@@ -199,281 +161,132 @@ python analysis/data_analysis.py
 **Saída esperada:**
 ```
 📥 Carregando dados do banco de dados...
-✅ 200 registros carregados
-
-🔍 Verificando qualidade dos dados...
-   - Duplicados: 0
-   - Valores nulos: 0
-   - Ativação válida: ✅
-   - Tipo interação válido: ✅
-
-📊 Gerando estatísticas descritivas...
-   📈 KPIs Principais:
-   - Total de detecções: 200
-   - Taxa de ativação: 95.0%
-   - Interações curtas: 114 (60%)
-   - Interações longas: 76 (40%)
-   - Tempo médio de permanência: 85.2s
-
-📈 Gerando gráficos...
-   ✅ interacoes_por_dia.png
-   ✅ tipos_interacao.png
-   ✅ tempo_permanencia.png
-   ✅ distribuicao_horaria.png
-   ✅ heatmap_uso.png
+✅ 1500 registros carregados
+📊 Gerando gráficos avançados...
+   ✅ sunburst_engajamento.png
+   ✅ interacoes_timeline.png
 ```
-
-#### 4️⃣ Treinar Modelo de ML
-
+#### 4️⃣Executar Análise de Dados
 ```bash
 python ml_model/train_model.py
-```
 
 **Saída esperada:**
+🤖 Treinando modelos de Inteligência Preditiva...
+✅ Treinamento concluído!
+🎯 Acurácia do modelo: 100.00%
+💾 Modelo salvo com sucesso em: ml_model/modelo_edubot.pkl
 ```
-🤖 Treinando modelos de Machine Learning...
-
-   📌 Treinando Decision Tree...
-      Acurácia: 0.9211
-      F1-Score: 0.9198
-
-   📌 Treinando Random Forest...
-      Acurácia: 0.9474
-      F1-Score: 0.9468
-
-💾 Salvando melhor modelo...
-   ✅ Modelo salvo: ml_model/model.pkl
-   📌 Melhor modelo: Random Forest
-   📊 F1-Score: 0.9468
-```
-
 #### 5️⃣ Iniciar Dashboard
-
 ```bash
 streamlit run dashboard/app.py
 ```
-
 **Acesse:** http://localhost:8501
+
 
 ---
 
 ## 🔧 Componentes do Sistema
-
 ### 1. Simulação de Sensores (`sensors_simulation/`)
+O script `simulated_sensors.py` gera 1.500 registros focados em engajamento humano:
 
-O script `simulated_sensors.py` gera dados realistas simulando o comportamento do totem:
+- **Volume:** Base de dados robusta para análise de comportamento.
 
-- **Timestamps**: Distribuídos no período de outubro-novembro 2025, horário comercial (8h-22h)
-- **Taxa de ativação**: ~95% das detecções resultam em interação
-- **Tipos de interação**: 60% curtas, 40% longas
-- **Tempo de permanência**:
-  - Curtas: 10-60 segundos
-  - Longas: 60-300 segundos
+-**Métricas:** Introdução de toques_por_minuto para medir a intensidade da interação.
+
+-**Categorias:**
+
+- Curta: 10-60s
+
+- Média: 61-150s (Nova categoria Sprint 3)
+
+- Longa: 151-300s
 
 ### 2. Banco de Dados (`database/`)
-
-SQLite foi escolhido por ser:
-- Portátil (arquivo único)
-- Sem necessidade de servidor
-- Compatível com pandas
-- Ideal para prototipagem
-
-**Schema da tabela `interacoes`:**
-
-```sql
-CREATE TABLE interacoes (
+ **Schema da tabela interacoes (v3.0):**
+ **SQL**
+```
+ CREATE TABLE interacoes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     timestamp DATETIME NOT NULL,
-    ativacao INTEGER NOT NULL CHECK(ativacao IN (0, 1)),
-    tipo_interacao TEXT NOT NULL CHECK(tipo_interacao IN ('curto', 'longo', 'nenhuma')),
-    tempo_permanencia INTEGER NOT NULL CHECK(tempo_permanencia >= 0),
-    sessao_id TEXT NOT NULL UNIQUE,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    session_id TEXT NOT NULL UNIQUE,
+    tempo_permanencia_seg INTEGER NOT NULL,
+    toques_por_minuto FLOAT NOT NULL,
+    velocidade_toques TEXT NOT NULL,
+    status_ativacao INTEGER DEFAULT 1,
+    tipo_interacao TEXT NOT NULL
 );
 ```
-
 ### 3. Análise de Dados (`analysis/`)
+O script `data_analysis.py` agora foca em **Insights de Comportamento:**
 
-O script `data_analysis.py` realiza:
+- Análise de Ritmo: Identifica se o usuário possui alta ou baixa interação com a interface.
 
-1. **Validação de qualidade**
-   - Verificação de duplicados
-   - Validação de campos (0/1, strings válidas)
-   - Detecção de valores nulos
-
-2. **Limpeza de dados**
-   - Remoção de duplicados
-   - Normalização de tipos
-   - Criação de features derivadas (data, hora, dia_semana, período)
-
-3. **Visualizações geradas**
-   - Interações por dia (barras + média móvel)
-   - Distribuição de tipos (pizza)
-   - Histograma de tempo de permanência
-   - Distribuição horária
-   - Heatmap de uso (dia × hora)
+- Visualizações: Gráfico Sunburst para relação entre tempo e velocidade de toques.
 
 ---
-
 ## 🤖 Machine Learning
 
 ### Objetivo
-
-Classificar o tipo de interação (`curto` ou `longo`) baseado nas características temporais e comportamentais.
+Classificar o perfil de engajamento (`curta, média ou longa`) do produtor rural baseado na intensidade de uso do totem.
 
 ### Features Utilizadas
 
-| Feature | Descrição | Tipo |
-|---------|-----------|------|
-| `tempo_permanencia` | Tempo da interação em segundos | Numérico |
-| `hora` | Hora do dia (0-23) | Numérico |
-| `dia_semana` | Dia da semana (0-6) | Numérico |
-| `horario_pico` | Flag para horário de pico | Binário |
-| `fim_semana` | Flag para fim de semana | Binário |
+| Feature                | Descrição                 | Tipo |
+|------------------------|---------------------------|------|
+| `tempo_permanencia_seg`| Duração da sessão         | Numérico |
+| toques_por_minuto      | Intensidade da interação  | Numérico |
 
-### Modelos Treinados
+### Métricas do Modelo Selecionado (Random Forest)
+| Métrica   | Valor |
+|-----------|-------|
+| Acurácia	 | 100%  |
+| Precisão	 | 100%  |
+| F1-Score	 | 1.0   |
 
-1. **Decision Tree**
-   - `max_depth=5`
-   - `min_samples_split=5`
+### 📊 Dashboard
+O dashboard Streamlit v3.0 oferece uma visão gerencial completa:
 
-2. **Random Forest** (Selecionado)
-   - `n_estimators=100`
-   - `max_depth=5`
-   - `min_samples_split=5`
+***KPIs Principais***
+- Total de Sessões Filtradas
+- Tempo Médio de Uso
+- Intensidade Média de Toques
+- % de Engajamento por Categoria
 
-### Métricas do Modelo Selecionado
+***Visualizações***
+- Timeline de acessos (2025-2026)
+- Sunburst Chart de Engajamento
+- Tabela de logs detalhada em tempo real
 
-| Métrica | Valor |
-|---------|-------|
-| Acurácia | ~94% |
-| Precisão | ~94% |
-| Recall | ~94% |
-| F1-Score | ~94% |
+***Filtros Avançados***
+- Calendário: Seleção de período específico para análise.
+- Engajamento: Filtro por tipo de interação e velocidade de toque.
 
-### Uso do Modelo
-
-```python
-from ml_model.train_model import predict_interaction
-
-# Exemplo de predição
-resultado = predict_interaction(
-    tempo_permanencia=120,  # segundos
-    hora=14,                # 14h
-    dia_semana=2            # quarta-feira
-)
-print(resultado)  # 'longo'
-```
+***Seção de IA***
+- Simulador interativo onde o gestor pode inserir dados manuais para testar a predição do modelo `.pkl.`
 
 ---
 
-## 📊 Dashboard
-
-O dashboard Streamlit oferece:
-
-### KPIs Principais
-- Total de detecções
-- Ativações efetivas
-- Tempo médio de permanência
-- Taxa de interações longas
-
-### Visualizações
-- Gráfico de linha temporal
-- Pizza de tipos de interação
-- Distribuição horária
-- Heatmap de uso
-
-### Filtros
-- Período (data inicial/final)
-- Tipo de interação
-- Status de ativação
-
-### Seção de ML
-- Métricas do modelo treinado
-- Teste de predição interativo
-
-### Executar Dashboard
-
+### 📐 Diagramas ###
+***Arquitetura Sprint 3***
 ```bash
-streamlit run dashboard/app.py
-```
-
-Acesse: **http://localhost:8501**
-
----
-
-## 📐 Diagramas
-
-Os diagramas estão em formato Mermaid no diretório `docs/diagramas/`:
-
-### Arquitetura Sprint 2
-![Arquitetura](docs/diagramas/arquitetura-sprint2.mmd)
-
-```mermaid
+Snippet de código
 flowchart TB
-    SIMULACAO --> DATABASE --> ANALYSIS --> ML --> DASHBOARD
+    SIMULACAO[Simulação 1500 registros] --> DATABASE[(SQLite Totem DB)]
+    DATABASE --> ANALYSIS[EDA & Insights]
+    ANALYSIS --> ML[Random Forest Model]
+    ML --> DASHBOARD[Streamlit UI]
 ```
-
-### Fluxo de Dados
-![Fluxo](docs/diagramas/fluxo-dados-sprint2.mmd)
-
-### Pipeline ML
-![ML](docs/diagramas/pipeline-ml-sprint2.mmd)
-
-**Para visualizar:**
-1. Abra o [Mermaid Live Editor](https://mermaid.live/)
-2. Cole o conteúdo do arquivo `.mmd`
-3. Exporte como PNG/SVG
-
 ---
 
-## 📈 Resultados e Métricas
+### 📈 Resultados e Métricas ###
+***Estatísticas do Dataset (Sprint 3)***
 
-### Estatísticas do Dataset
-
-| Métrica | Valor |
-|---------|-------|
-| Total de registros | 200 |
-| Taxa de ativação | ~95% |
-| Interações curtas | ~60% |
-| Interações longas | ~40% |
-| Tempo médio (curtas) | ~35s |
-| Tempo médio (longas) | ~150s |
-
-### Performance do Pipeline
-
-| Etapa | Tempo de Execução |
-|-------|-------------------|
-| Simulação de dados | < 1s |
-| Inicialização DB | < 1s |
-| Análise + Gráficos | ~5s |
-| Treinamento ML | ~3s |
-| Dashboard | Tempo real |
-
----
-
-## 🔮 Próximos Passos
-
-### Sprint 3 - Previsões
-
-1. **Integração com Sensores Reais**
-   - Conectar ESP32-CAM
-   - Streaming de dados em tempo real
-
-2. **Melhorias no ML**
-   - Mais features comportamentais
-   - Modelos de série temporal
-   - Predição de demanda por horário
-
-3. **Dashboard Avançado**
-   - Alertas em tempo real
-   - Relatórios automáticos
-   - Exportação de dados
-
-4. **Deploy em Produção**
-   - Containerização (Docker)
-   - Deploy em cloud
-   - Monitoramento
+| Métrica                  | Valor    |
+|--------------------------|----------|
+| Total de registros       | 	1500  |
+ Interações Médias	       | ~31%     |
+ Interações Longas	       | ~34%     |
+ Acurácia do Modelo	100%   | 100%     |
 
 ---
 
@@ -489,7 +302,7 @@ flowchart TB
 
 **Turma:** R  
 **Instituição:** FIAP - Tecnólogo em Inteligência Artificial  
-**Data:** Novembro de 2025
+**Data:** Março de 2026
 
 ---
 
@@ -499,5 +312,6 @@ Este projeto é desenvolvido para fins acadêmicos como parte do Challenge FlexM
 
 ---
 
-**Última atualização:** Novembro de 2025  
-**Versão:** Sprint 2.0
+**Última atualização:** Março de 2026
+**Versão:** Sprint 3.0
+
