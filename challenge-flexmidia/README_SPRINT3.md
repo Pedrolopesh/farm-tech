@@ -181,7 +181,7 @@ python ml_model/train_model.py
 streamlit run dashboard/app.py
 ```
 **Acesse:** http://localhost:8501
-
+**Network URL**: http://172.20.10.3:8501
 
 ---
 
