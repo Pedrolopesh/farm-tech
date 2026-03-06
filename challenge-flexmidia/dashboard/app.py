@@ -11,7 +11,7 @@ import sqlite3
 import joblib
 import plotly.express as px
 
-st.set_page_config(page_title="EDUBOT Pro - Dashboard Agrícola", layout="wide")
+st.set_page_config(page_title="EDUBOT Pro", layout="wide")
 
 def carregar_dados():
     conn = sqlite3.connect('challenge-flexmidia/database/totem.db')
@@ -55,7 +55,7 @@ if status != "Todos":
 df_filtrado = df[mask]
 
 # --- DASHBOARD ---
-st.title("🚜 EDUBOT - Monitoramento Farm-Tech")
+st.title("🚜 EDUBOT")
 st.markdown(f"Exibindo **{len(df_filtrado)}** de {len(df)} registros totais.")
 
 # KPIs

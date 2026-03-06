@@ -1,9 +1,6 @@
 """
-EDUBOT - Inicialização do Banco de Dados SQLite
+EDUBOT - Inicialização do Banco Híbrido (Seed Data)
 Sprint 3 - Challenge FlexMedia
-
-Este script cria o banco de dados SQLite e a tabela de interações,
-além de popular com os dados do CSV simulado.
 """
 import sqlite3
 import pandas as pd
@@ -13,8 +10,10 @@ os.makedirs('challenge-flexmidia/database', exist_ok=True)
 conn = sqlite3.connect('challenge-flexmidia/database/totem.db')
 cursor = conn.cursor()
 
+print("🗃️ Resetando e criando tabela estruturada...")
 cursor.execute('DROP TABLE IF EXISTS interacoes')
 
+# Criação da tabela com tipagem forte (Requisito da Sprint 3)
 cursor.execute('''
 CREATE TABLE interacoes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,29 +28,23 @@ CREATE TABLE interacoes (
 )
 ''')
 
-# Lista de lugares onde o CSV pode ter se escondido
+# --- CARGA INICIAL (SEED DATA) ---
+print("📥 Buscando histórico de dados (CSV) para carga inicial...")
 caminhos = [
     'challenge-flexmidia/sensors_simulation/edubot_sensor_data.csv',
     'edubot_sensor_data.csv',
     'sensors_simulation/edubot_sensor_data.csv'
 ]
 
-# Tenta achar o arquivo em algum dos caminhos
 csv_path = next((c for c in caminhos if os.path.exists(c)), None)
 
 if csv_path:
     df = pd.read_csv(csv_path)
     df.to_sql('interacoes', conn, if_exists='append', index=False)
-    print("============================================================")
-    print("EDUBOT - Nova Inicialização do Banco de Dados")
-    print("============================================================")
-    print(f"✅ Banco de dados recriado com sucesso!")
-    print(f"✅ {len(df)} registros inseridos a partir de: {csv_path}")
-    print("\n📊 Resumo do que foi para o banco:")
-    print(df['tipo_interacao'].value_counts())
-    print("============================================================")
+    print(f"✅ Sucesso! {len(df)} registros históricos inseridos do CSV.")
 else:
-    print("⚠️ CSV não encontrado em lugar nenhum! Tem certeza que o simulador rodou?")
+    print("⚠️ CSV não encontrado. O banco começará vazio.")
 
 conn.commit()
 conn.close()
+print("🚀 Banco de dados pronto! Agora inicie a API (main.py).")
