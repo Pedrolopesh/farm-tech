@@ -141,17 +141,17 @@ python challenge-flexmidia/database/init_db.py
 
 ```
 
-#### 4️⃣Executar Análise de Dados
+#### **4️⃣Executar Análise de Dados**
 ```bash
 python challenge-flexmidia/ml_model/train_model.py
-````
-
+```
 **Saída esperada:**
 🤖 Treinando modelos de Inteligência Preditiva...
 ✅ Treinamento concluído!
 🎯 Acurácia do modelo: 100.00%
 💾 Modelo salvo com sucesso em: ml_model/modelo_edubot.pkl
 ```
+
 #### 5️⃣ Iniciar Dashboard
 ```bash
 streamlit run challenge-flexmidia/dashboard/app.py
