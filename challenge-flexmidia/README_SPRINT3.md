@@ -10,11 +10,13 @@
 1. [Visão Geral da Sprint 3](#-visão-geral-da-sprint-3)
 2. [Novidades desta Versão](#-novidades-desta-versão)
 3. [Estrutura do Projeto](#-estrutura-do-projeto)
-4. [Guia de Execução](#-guia-de-execução)
-5. [Machine Learning Avançado](#-machine-learning-avançado)
-6. [Dashboard de Monitoramento](#-dashboard-de-monitoramento)
-7. [Resultados e Métricas](#-resultados-e-métricas)
-8. [Equipe](#-equipe)
+4. [Camada de Edge Computing (IoT)](#-Camada-de-Edge-Computing-(IoT))
+5. [Cognitive CyberSecurity](#-Cognitive-CyberSecurity)
+6. [Guia de Execução](#-guia-de-execução)
+7. [Machine Learning Avançado](#-machine-learning-avançado)
+8. [Dashboard de Monitoramento](#-dashboard-de-monitoramento)
+9. [Resultados e Métricas](#-resultados-e-métricas)
+10. [Equipe](#-equipe)
 
 ---
 
@@ -25,8 +27,8 @@ A Sprint 3 do EDUBOT marca a evolução do sistema de monitoramento para uma pla
 * ✅ **Big Data Simulação:** Expansão para 1.500 registros cobrindo o período de 2025 a 2026.
 * ✅ **Novas Variáveis:** Inclusão de `toques_por_minuto` e `velocidade_toques` (alta/baixa).
 * ✅ **ML de Alta Precisão:** Implementação do Random Forest com 100% de acurácia nos padrões de treino.
-* ✅ **Dashboard Interativo:** Interface Streamlit com filtros de data, gráficos de tendência e simulador de IA.
-* ✅ **Persistência Evoluída:** Reestruturação do banco SQLite para suportar as novas colunas de engajamento.
+* ✅ **Integração de Borda: Implementação do firmware para ESP32-CAM.**
+* ✅ **Segurança de Dados: Proteção via X-API-KEY e Pydantic.**
 
 ---
 
@@ -42,46 +44,35 @@ Diferente da Sprint 2, agora monitoramos não apenas o "tempo", mas a **intensid
 ```text
 challenge-flexmidia/
 ├── sensors_simulation/
-│   ├── simulated_sensors.py      # Script v3.0 (1500 registros + métricas de toque)
-│   └── edubot_sensor_data.csv    # Novo Dataset expandido
+│   ├── simulated_sensors.py      # Script v3.0 (1500 registros)
+├── edge/
+│   └── esp32_firmware.ino        # Firmware C++ para o ESP32-CAM
 ├── database/
-│   ├── init_db.py                # Script de recriação do banco com novas colunas
+│   ├── init_db.py                # Script de recriação do banco
 │   └── totem.db                  # SQLite atualizado
 ├── ml_model/
 │   ├── train_model.py            # Treinamento do Random Forest
-│   └── modelo_edubot.pkl         # Modelo serializado de alta performance
-├── analysis/
-│   ├── data_analysis.py          # Gerador de gráficos de engajamento
-│   └── plots/                    # Novas análises (Sunburst, Timeline)
+│   └── modelo_edubot.pkl         # Modelo serializado
 ├── dashboard/
-│   └── app.py                    # Dashboard Pro com filtros e simulador de IA
+│   └── app.py                    # Dashboard Pro com Matriz de Confusão e Heatmap
 └── README_SPRINT3.md             # Este arquivo
 ```
-
 ---
 
-# EDUBOT - Sprint 3: Inteligência Preditiva e Engajamento Avançado
-### Challenge FlexMedia - Sprint 3
-**Tecnólogo em Inteligência Artificial - FIAP** *"Modelagem de dados complexos e predição de engajamento em tempo real"*
+## 🌐 **Camada de Edge Computing (IoT)**
+Nesta sprint, o EDUBOT deixa de ser apenas uma simulação para se tornar um sistema de borda real utilizando o ESP32-CAM.
 
-**Repositório:** [https://github.com/Pedrolopesh/farm-tech](https://github.com/Pedrolopesh/farm-tech)
-
----
-
-## 📋 Índice
-1. [Visão Geral da Sprint 3](#-visão-geral-da-sprint-3)
-2. [Fluxo de Dados](#-fluxo-de-dados)
-3. [Dados Coletados e Simulados](#-dados-coletados-e-simulados)
-4. [Estrutura do Projeto](#-estrutura-do-projeto)
-5. [Guia de Execução](#-guia-de-execução)
-6. [Machine Learning Avançado](#-machine-learning-avançado)
-7. [Dashboard de Monitoramento](#-dashboard-de-monitoramento)
-8. [Equipe](#-equipe)
+**Conexão e Funcionamento (Hipotético/Prático)**
+- **Hardware**: Utilização do módulo AI Thinker ESP32-CAM para captura de dados.
+- **Protocolo**: O hardware envia requisições HTTP POST com pacotes JSON contendo o tempo_permanencia e toques_por_minuto.
+- **Modo de Gravação**: Para a carga do firmware, é necessária uma ponte física entre o pino GPIO 0 e o GND da placa.
 
 ---
-
-## 🎯 Visão Geral da Sprint 3
-A Sprint 3 do EDUBOT marca a evolução do sistema de monitoramento para uma plataforma de **Inteligência de Dados**. Expandimos a base de dados para 1.500 registros e introduzimos métricas de comportamento humano (frequência de toques) para classificar o nível de interesse do produtor rural.
+## 🛡️ Cognitive CyberSecurity
+A segurança foi integrada em todas as camadas para garantir a integridade dos dados da FlexMedia:
+- Autenticação: O ESP32 deve enviar obrigatoriamente a chave X-API-KEY no cabeçalho das requisições para que a API autorize a ingestão.
+- Validação de Schema: A API utiliza Pydantic para assegurar que apenas dados formatados corretamente entrem no banco de dados.
+- Integridade SQL: Uso de CHECK Constraints no SQLite para evitar valores inválidos de sensores.
 
 ---
 
