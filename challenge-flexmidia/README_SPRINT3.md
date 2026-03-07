@@ -10,25 +10,27 @@
 1. [Visão Geral da Sprint 3](#-visão-geral-da-sprint-3)
 2. [Novidades desta Versão](#-novidades-desta-versão)
 3. [Estrutura do Projeto](#-estrutura-do-projeto)
-4. [Camada de Edge Computing (IoT)](#-Camada-de-Edge-Computing-(IoT))
-5. [Cognitive CyberSecurity](#-Cognitive-CyberSecurity)
+4. [Camada de Edge Computing (IoT)](#-camada-de-edge-computing-iot)
+5. [Cognitive CyberSecurity](#-cognitive-cybersecurity)
 6. [Guia de Execução](#-guia-de-execução)
-7. [Machine Learning Avançado](#-machine-learning-avançado)
-8. [Dashboard de Monitoramento](#-dashboard-de-monitoramento)
-9. [Resultados e Métricas](#-resultados-e-métricas)
-10. [Equipe](#-equipe)
+7. [Fluxo de Dados](#-fluxo-de-dados)
+8. [Componentes do Sistema](#-componentes-do-sistema)
+9. [Machine Learning Avançado](#-machine-learning-avançado)
+10. [Dashboard de Monitoramento](#-dashboard-de-monitoramento)
+11. [Resultados e Métricas](#-resultados-e-métricas)
+12. [Equipe](#-equipe)
 
 ---
 
 ## 🎯 Visão Geral da Sprint 3
-A Sprint 3 do EDUBOT marca a evolução do sistema de monitoramento para uma plataforma de **Inteligência de Dados**. Expandimos a base de dados para 1.500 registros e introduzimos métricas de comportamento humano (frequência de toques) para classificar o nível de interesse do produtor rural.
+A Sprint 3 do EDUBOT marca a evolução do sistema de monitoramento para uma plataforma de **Inteligência de Dados**. Expandimos a base de dados para 1.500 registros e introduzimos métricas de comportamento humano (frequência de toques) para classificar o nível de interesse do estudante.
 
 ### Objetivos Alcançados
 * ✅ **Big Data Simulação:** Expansão para 1.500 registros cobrindo o período de 2025 a 2026.
 * ✅ **Novas Variáveis:** Inclusão de `toques_por_minuto` e `velocidade_toques` (alta/baixa).
 * ✅ **ML de Alta Precisão:** Implementação do Random Forest com 100% de acurácia nos padrões de treino.
-* ✅ **Integração de Borda: Implementação do firmware para ESP32-CAM.**
-* ✅ **Segurança de Dados: Proteção via X-API-KEY e Pydantic.**
+* ✅ **Integração de Borda:** Implementação do firmware para ESP32-CAM.
+* ✅ **Segurança de Dados:** Proteção via X-API-KEY e Pydantic.
 
 ---
 
@@ -57,6 +59,7 @@ challenge-flexmidia/
 │   └── app.py                    # Dashboard Pro com Matriz de Confusão e Heatmap
 └── README_SPRINT3.md             # Este arquivo
 ```
+
 ---
 
 ## 🌐 **Camada de Edge Computing (IoT)**
@@ -68,11 +71,12 @@ Nesta sprint, o EDUBOT deixa de ser apenas uma simulação para se tornar um sis
 - **Modo de Gravação**: Para a carga do firmware, é necessária uma ponte física entre o pino GPIO 0 e o GND da placa.
 
 ---
+
 ## 🛡️ Cognitive CyberSecurity
 A segurança foi integrada em todas as camadas para garantir a integridade dos dados da FlexMedia:
-- Autenticação: O ESP32 deve enviar obrigatoriamente a chave X-API-KEY no cabeçalho das requisições para que a API autorize a ingestão.
-- Validação de Schema: A API utiliza Pydantic para assegurar que apenas dados formatados corretamente entrem no banco de dados.
-- Integridade SQL: Uso de CHECK Constraints no SQLite para evitar valores inválidos de sensores.
+- **Autenticação**: O ESP32 deve enviar obrigatoriamente a chave X-API-KEY no cabeçalho das requisições para que a API autorize a ingestão.
+- **Validação de Schema**: A API utiliza Pydantic para assegurar que apenas dados formatados corretamente entrem no banco de dados.
+- **Integridade SQL**: Uso de CHECK Constraints no SQLite para evitar valores inválidos de sensores.
 
 ---
 
@@ -90,6 +94,7 @@ A segurança foi integrada em todas as camadas para garantir a integridade dos d
 │  Random Forest  │     │  (modelo.pkl)   │     │   Streamlit     │
 └─────────────────┘     └─────────────────┘     └─────────────────┘
 ```
+
 ### Dados Coletados/Simulados
 
 | Campo | Tipo | Descrição |
@@ -102,58 +107,29 @@ A segurança foi integrada em todas as camadas para garantir a integridade dos d
 | **velocidade_toques** | TEXT | Classificação do ritmo (lenta, média, alta) |
 | **tipo_interacao** | TEXT | **Target:** Classificação da experiência (curta/média/longa) |
 
+---
+
 ## 🚀 Guia de Execução
 
+Para facilitar a avaliação, construímos um pipeline automatizado que sobe todos os serviços (API, Dashboard e Sensores) em paralelo.
+
 ### Pré-requisitos
+* Python 3.11 ou superior
+* Bibliotecas: `pip install -r requirements.txt`
+* Terminal Windows (CMD/PowerShell)
+
+### Execução em 1 Clique (Recomendado)
+Na raiz do projeto, execute o script de inicialização batch:
 
 ```bash
-# Python 3.11 ou superior
-python --version
-
-## 🚀 Instalação
-# Navegar até o diretório do projeto
-cd challenge-flexmidia
-
-# Instalar dependências
-pip install streamlit plotly scikit-learn joblib pandas
-
-### Execução Passo a Passo
-#### 1️⃣ Gerar Dados Simulados
-```bash
-python sensors_simulation/simulated_sensors.py
-````
-**Saída esperada:**
-🚀 Iniciando simulação de dados do EDUBOT v3.0...
-✅ 1500 registros gerados com sucesso (Período: 2025-2026)!
-💾 Dataset salvo em: sensors_simulation/edubot_sensor_data.csv
-
-#### 2️⃣ Inicializar Banco de Dados
-
-```bash
-python challenge-flexmidia/database/init_db.py
+.\iniciar_edubot.bat
 ```
-**Saída esperada:**
-🗃️  Atualizando banco de dados SQLite...
-✅ Banco de dados sincronizado em: database/totem.db
-📥 Carregando 1500 registros para o banco...
-✅ Sucesso!
 
-#### 4️⃣Executar Análise de Dados
-```bash
-python challenge-flexmidia/ml_model/train_model.py
-```
-**Saída esperada:**
-🤖 Treinando modelos de Inteligência Preditiva...
-✅ Treinamento concluído!
-🎯 Acurácia do modelo: 100.00%
-💾 Modelo salvo com sucesso em: ml_model/modelo_edubot.pkl
+*Este script iniciará automaticamente 3 terminais instanciando: o servidor FastAPI, o Dashboard Streamlit e o emissor de dados dos sensores em tempo real.*
 
-#### 5️⃣ Iniciar Dashboard
-```bash
-streamlit run challenge-flexmidia/dashboard/app.py
-```
-**Acesse:** http://localhost:8501
-**Network URL**: http://192.168.0.29:8501
+### Acessos Locais:
+* **Dashboard Streamlit:** http://localhost:8501
+* **Documentação da API (Swagger):** http://localhost:8000/docs
 
 ---
 
@@ -162,21 +138,15 @@ streamlit run challenge-flexmidia/dashboard/app.py
 O script `simulated_sensors.py` gera 1.500 registros focados em engajamento humano:
 
 - **Volume:** Base de dados robusta para análise de comportamento.
-
--**Métricas:** Introdução de toques_por_minuto para medir a intensidade da interação.
-
--**Categorias:**
-
-- Curta: 10-60s
-
-- Média: 61-150s (Nova categoria Sprint 3)
-
-- Longa: 151-300s
+- **Métricas:** Introdução de toques_por_minuto para medir a intensidade da interação.
+- **Categorias:**
+  - Curta: 10-60s
+  - Média: 61-150s (Nova categoria Sprint 3)
+  - Longa: 151-300s
 
 ### 2. Banco de Dados (`database/`)
  **Schema da tabela interacoes (v3.0):**
- **SQL**
-```
+ ```sql
  CREATE TABLE interacoes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     timestamp DATETIME NOT NULL,
@@ -188,25 +158,26 @@ O script `simulated_sensors.py` gera 1.500 registros focados em engajamento huma
     tipo_interacao TEXT NOT NULL
 );
 ```
+
 ### 3. Análise de Dados (`analysis/`)
 O script `data_analysis.py` agora foca em **Insights de Comportamento:**
 
 - Análise de Ritmo: Identifica se o usuário possui alta ou baixa interação com a interface.
-
 - Visualizações: Gráfico Sunburst para relação entre tempo e velocidade de toques.
 
 ---
+
 ## 🤖 Machine Learning
 
 ### Objetivo
-Classificar o perfil de engajamento (`curta, média ou longa`) do produtor rural baseado na intensidade de uso do totem.
+Classificar o perfil de engajamento (`curta, média ou longa`) do estudante baseado na intensidade de uso do totem.
 
 ### Features Utilizadas
 
 | Feature                | Descrição                 | Tipo |
 |------------------------|---------------------------|------|
 | `tempo_permanencia_seg`| Duração da sessão         | Numérico |
-| toques_por_minuto      | Intensidade da interação  | Numérico |
+| `toques_por_minuto`    | Intensidade da interação  | Numérico |
 
 ### Métricas do Modelo Selecionado (Random Forest)
 | Métrica   | Valor |
@@ -214,6 +185,8 @@ Classificar o perfil de engajamento (`curta, média ou longa`) do produtor rural
 | Acurácia	 | 100%  |
 | Precisão	 | 100%  |
 | F1-Score	 | 1.0   |
+
+---
 
 ### 📊 Dashboard
 O dashboard Streamlit v3.0 oferece uma visão gerencial completa:
@@ -234,31 +207,19 @@ O dashboard Streamlit v3.0 oferece uma visão gerencial completa:
 - Engajamento: Filtro por tipo de interação e velocidade de toque.
 
 ***Seção de IA***
-- Simulador interativo onde o gestor pode inserir dados manuais para testar a predição do modelo `.pkl.`
+- Simulador interativo onde o gestor pode inserir dados manuais para testar a predição do modelo `.pkl`.
 
 ---
 
-### 📐 Diagramas ###
-***Arquitetura Sprint 3***
-```bash
-Snippet de código
-flowchart TB
-    SIMULACAO[Simulação 1500 registros] --> DATABASE[(SQLite Totem DB)]
-    DATABASE --> ANALYSIS[EDA & Insights]
-    ANALYSIS --> ML[Random Forest Model]
-    ML --> DASHBOARD[Streamlit UI]
-```
----
-
-### 📈 Resultados e Métricas ###
+## 📈 Resultados e Métricas
 ***Estatísticas do Dataset (Sprint 3)***
 
 | Métrica                  | Valor    |
 |--------------------------|----------|
-| Total de registros       | 	1500  |
- Interações Médias	       | ~31%     |
- Interações Longas	       | ~34%     |
- Acurácia do Modelo	100%   | 100%     |
+| Total de registros       | 1500     |
+| Interações Médias	       | ~31%     |
+| Interações Longas	       | ~34%     |
+| Acurácia do Modelo	   | 100%     |
 
 ---
 
@@ -279,11 +240,9 @@ flowchart TB
 ---
 
 ## 📄 Licença
-
 Este projeto é desenvolvido para fins acadêmicos como parte do Challenge FlexMedia da FIAP.
 
 ---
 
 **Última atualização:** Março de 2026
 **Versão:** Sprint 3.0
-
