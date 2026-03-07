@@ -123,7 +123,6 @@ pip install streamlit plotly scikit-learn joblib pandas
 python sensors_simulation/simulated_sensors.py
 
 **Saída esperada:**
-```
 🚀 Iniciando simulação de dados do EDUBOT v3.0...
 ✅ 1500 registros gerados com sucesso (Período: 2025-2026)!
 💾 Dataset salvo em: sensors_simulation/edubot_sensor_data.csv
@@ -131,11 +130,10 @@ python sensors_simulation/simulated_sensors.py
 #### 2️⃣ Inicializar Banco de Dados
 
 ```bash
-python database/init_db.py
+python challenge-flexmidia/database/init_db.py
 ```
 
 **Saída esperada:**
-```
 🗃️  Atualizando banco de dados SQLite...
 ✅ Banco de dados sincronizado em: database/totem.db
 📥 Carregando 1500 registros para o banco...
@@ -143,23 +141,10 @@ python database/init_db.py
 
 ```
 
-#### 3️⃣ Executar Análise de Dados
-
-```bash
-python analysis/data_analysis.py
-```
-
-**Saída esperada:**
-```
-📥 Carregando dados do banco de dados...
-✅ 1500 registros carregados
-📊 Gerando gráficos avançados...
-   ✅ sunburst_engajamento.png
-   ✅ interacoes_timeline.png
-```
 #### 4️⃣Executar Análise de Dados
 ```bash
-python ml_model/train_model.py
+python challenge-flexmidia/ml_model/train_model.py
+````
 
 **Saída esperada:**
 🤖 Treinando modelos de Inteligência Preditiva...
@@ -169,7 +154,7 @@ python ml_model/train_model.py
 ```
 #### 5️⃣ Iniciar Dashboard
 ```bash
-streamlit run dashboard/app.py
+streamlit run challenge-flexmidia/dashboard/app.py
 ```
 **Acesse:** http://localhost:8501
 **Network URL**: http://192.168.0.29:8501
