@@ -44,4 +44,6 @@ Para além da predição, aplicámos técnicas para descobrir padrões ocultos:
 3. Instale as dependências:
    ```bash
    pip install pandas scikit-learn seaborn matplotlib
+4. Em caso de dificuldade de visualizar no Jupyter, considerar pelo URL abaixo:
+   https://nbviewer.org/github/Pedrolopesh/farm-tech/blob/master/fase_5/Entrega_FarmTech.ipynb
    
