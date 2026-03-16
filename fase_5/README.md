@@ -2,6 +2,15 @@
 
 Este repositório contém a solução de Ciência de Dados desenvolvida para a **FarmTech Solutions**, focada em transformar dados climáticos em inteligência preditiva para o agronegócio. O projeto integra modelos de regressão (supervisionados) e técnicas de agrupamento (não supervisionados).
 
+👨‍🎓 Integrantes:
+| Nome | RM | E-mail |
+|------|-----|--------|
+| **Fabrício Mouzer Brito** | RM566777 | fabriciomouzer@hotmail.com |
+| **Pedro Henrique Lopes dos Santos** | RM568359 | pedrolopeshls99@gmail.com |
+| **Enzo Nunes Castanheira Gloria da Silva** | RM567599 | enzoncgs@gmail.com |
+| **Larissa Nunes Moreira Reis** | RM568280 | larissa.nmreis@gmail.com |
+| **Gabriel Rapozo Guimarães Soares** | RM568480 | rapozogabriel8@gmail.com |
+
 ## 📋 Visão Geral
 O objetivo deste projeto é prever o rendimento agrícola (*Yield*) com base em variáveis como Temperatura, Precipitação e Humidade, além de segmentar a fazenda em zonas de manejo estratégico e identificar anomalias.
 
