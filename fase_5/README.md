@@ -2,6 +2,10 @@
 
 Este repositório contém a solução de Ciência de Dados desenvolvida para a **FarmTech Solutions**, focada em transformar dados climáticos em inteligência preditiva para o agronegócio. O projeto integra modelos de regressão (supervisionados) e técnicas de agrupamento (não supervisionados).
 
+## Informações do projeto
+ Link do repositório: https://github.com/Pedrolopesh/farm-tech/tree/master/fase_5
+
+
 👨‍🎓 Integrantes:
 | Nome | RM | E-mail |
 |------|-----|--------|
