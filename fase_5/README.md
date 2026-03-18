@@ -99,13 +99,13 @@ Embora a região da Virgínia apresente um custo inferior, a escolha estratégic
 Abaixo estão os detalhes da configuração realizada na calculadora da AWS que serviu de base para o comparativo de menor custo.
 
 #### 1. Especificações da Instância EC2
-![Configuração da Instância](./image_b0888c.png)
+![Configuração da Instância](./assets/Captura%20de%20tela%202026-03-18%20015300.png)
 
 #### 2. Detalhes de Armazenamento (EBS)
-![Configuração de Armazenamento](./image_b0888a.png)
+![Configuração de Armazenamento](./assets/Captura%20de%20tela%202026-03-18%20015333.png)
 
 #### 3. Resumo do Custo Mensal Total
-![Resumo de Custos](./image_b088a4.png)
+![Resumo de Custos](./assets/Captura%20de%20tela%202026-03-18%20014707.png)
 
 ---
 
@@ -114,14 +114,13 @@ Abaixo estão os detalhes da configuração realizada na calculadora da AWS que 
 Abaixo estão os detalhes da configuração realizada na calculadora da AWS que serviu de base para o comparativo de menor custo.
 
 #### 1. Especificações da Instância EC2
-![Configuração da Instância](./image_b0888c.png)
+![Configuração da Instância](./assets/Captura%20de%20tela%202026-03-18%20015300.png)
 
 #### 2. Detalhes de Armazenamento (EBS)
-![Configuração de Armazenamento](./image_b0888a.png)
+![Configuração de Armazenamento](./assets/Captura%20de%20tela%202026-03-18%20015333.png)
 
 #### 3. Resumo do Custo Mensal Total
-![Resumo de Custos](./image_b088a4.png)
-
+![Resumo de Custos](./assets/Captura%20de%20tela%202026-03-18%20022632.png)
 ---
 
 ### 💡 Próximos Passos
