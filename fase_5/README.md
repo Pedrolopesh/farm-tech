@@ -63,14 +63,18 @@ Para além da predição, aplicámos técnicas para descobrir padrões ocultos:
    
 ## ☁️ Entrega 2: Arquitetura e Estimativa de Custos (AWS)
 
-Para a hospedagem da API de Machine Learning da FarmTech Solutions, realizamos uma estimativa de custos utilizando a **AWS Pricing Calculator**, comparando a viabilidade técnica e financeira entre duas regiões: **N. Virginia (us-east-1)** e **São Paulo (sa-east-1)**.
+
+## 📝 Descrição da Infraestrutura
+Para a hospedagem da API de Machine Learning da **FarmTech Solutions**, realizamos uma estimativa de custos utilizando a **AWS Pricing Calculator**, comparando a viabilidade técnica e financeira entre duas regiões: **N. Virginia (us-east-1)** e **São Paulo (sa-east-1)**.
 
 ### Configuração da Infraestrutura
 * **Instância:** Linux (t3.micro - 2 vCPUs, 1 GiB RAM)
 * **Armazenamento:** 50 GB EBS (gp3)
 * **Modelo de Contratação:** On-Demand (100% de uso mensal)
 
-### Comparativo de Custos (Mensal)
+---
+
+## 📊 Comparativo de Custos (Mensal)
 
 | Componente | Região: N. Virgínia (EUA) | Região: São Paulo (Brasil) |
 | :--- | :--- | :--- |
@@ -78,9 +82,53 @@ Para a hospedagem da API de Machine Learning da FarmTech Solutions, realizamos u
 | **Armazenamento (EBS)** | 4.00 USD | 7.60 USD |
 | **Total Estimado** | **11.59 USD** | **19.86 USD** |
 
-### Justificativa de Escolha: São Paulo (sa-east-1)
+---
+
+## ⚖️ Justificativa de Escolha: São Paulo (sa-east-1)
+
 Embora a região da Virgínia apresente um custo inferior, a escolha estratégica para este projeto é a região de **São Paulo**, baseada nos seguintes pilares:
 
 1. **Baixa Latência:** Como os sensores e os usuários finais (fazenda) estão localizados no Brasil, o processamento local garante uma resposta em tempo real para as predições de safra.
 2. **Conformidade Legal (LGPD):** A manutenção dos dados em solo nacional atende às exigências da Lei Geral de Proteção de Dados, evitando riscos jurídicos associados à transferência internacional de dados sensíveis da operação agrícola.
 3. **Soberania Digital:** Garantia de que a infraestrutura crítica do cliente (FarmTech) opere sob a jurisdição brasileira.
+
+---
+
+## 🖼️ Evidências da Configuração (N. Virgínia - Referência de Preço Base)
+
+Abaixo estão os detalhes da configuração realizada na calculadora da AWS que serviu de base para o comparativo de menor custo.
+
+#### 1. Especificações da Instância EC2
+![Configuração da Instância](./image_b0888c.png)
+
+#### 2. Detalhes de Armazenamento (EBS)
+![Configuração de Armazenamento](./image_b0888a.png)
+
+#### 3. Resumo do Custo Mensal Total
+![Resumo de Custos](./image_b088a4.png)
+
+---
+
+## 🖼️ Evidências da Configuração (São Paulo - Referência de Preço Base)
+
+Abaixo estão os detalhes da configuração realizada na calculadora da AWS que serviu de base para o comparativo de menor custo.
+
+#### 1. Especificações da Instância EC2
+![Configuração da Instância](./image_b0888c.png)
+
+#### 2. Detalhes de Armazenamento (EBS)
+![Configuração de Armazenamento](./image_b0888a.png)
+
+#### 3. Resumo do Custo Mensal Total
+![Resumo de Custos](./image_b088a4.png)
+
+---
+
+### 💡 Próximos Passos
+* [ ] Realizar o deploy da API na instância configurada.
+* [ ] Configurar as Security Groups para acesso seguro à API.
+* [ ] Validar a latência de resposta entre a aplicação e a infraestrutura em SP.
+
+---
+
+> **Nota:** Os valores apresentados são estimativas baseadas na tabela oficial da AWS de Março de 2026 e podem variar conforme o uso real de transferência de dados (Data Transfer Out).
