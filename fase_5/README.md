@@ -59,4 +59,28 @@ Para além da predição, aplicámos técnicas para descobrir padrões ocultos:
    pip install pandas scikit-learn seaborn matplotlib
 4. Em caso de dificuldade de visualizar no Jupyter, considerar pelo URL abaixo:
    https://nbviewer.org/github/Pedrolopesh/farm-tech/blob/master/fase_5/Entrega_FarmTech.ipynb
+
    
+## ☁️ Entrega 2: Arquitetura e Estimativa de Custos (AWS)
+
+Para a hospedagem da API de Machine Learning da FarmTech Solutions, realizamos uma estimativa de custos utilizando a **AWS Pricing Calculator**, comparando a viabilidade técnica e financeira entre duas regiões: **N. Virginia (us-east-1)** e **São Paulo (sa-east-1)**.
+
+### Configuração da Infraestrutura
+* **Instância:** Linux (t3.micro - 2 vCPUs, 1 GiB RAM)
+* **Armazenamento:** 50 GB EBS (gp3)
+* **Modelo de Contratação:** On-Demand (100% de uso mensal)
+
+### Comparativo de Custos (Mensal)
+
+| Componente | Região: N. Virgínia (EUA) | Região: São Paulo (Brasil) |
+| :--- | :--- | :--- |
+| **Instância EC2** | 7.59 USD | 12.26 USD |
+| **Armazenamento (EBS)** | 4.00 USD | 7.60 USD |
+| **Total Estimado** | **11.59 USD** | **19.86 USD** |
+
+### Justificativa de Escolha: São Paulo (sa-east-1)
+Embora a região da Virgínia apresente um custo inferior, a escolha estratégica para este projeto é a região de **São Paulo**, baseada nos seguintes pilares:
+
+1. **Baixa Latência:** Como os sensores e os usuários finais (fazenda) estão localizados no Brasil, o processamento local garante uma resposta em tempo real para as predições de safra.
+2. **Conformidade Legal (LGPD):** A manutenção dos dados em solo nacional atende às exigências da Lei Geral de Proteção de Dados, evitando riscos jurídicos associados à transferência internacional de dados sensíveis da operação agrícola.
+3. **Soberania Digital:** Garantia de que a infraestrutura crítica do cliente (FarmTech) opere sob a jurisdição brasileira.
