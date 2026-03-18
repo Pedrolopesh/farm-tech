@@ -4,6 +4,8 @@ Este repositório contém a solução de Ciência de Dados desenvolvida para a *
 
 ## Informações do projeto
  Link do repositório: https://github.com/Pedrolopesh/farm-tech/tree/master/fase_5
+ 
+ Link do video para a entrega 2: https://youtu.be/TKkFIAKQBKs
 
 
 👨‍🎓 Integrantes:
