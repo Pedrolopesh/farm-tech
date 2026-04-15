@@ -1,0 +1,91 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#9C27B0'}}}%%
+
+flowchart TB
+    subgraph DADOS["📊 DADOS DE ENTRADA"]
+        RAW["Dados Brutos<br/>200 registros"]
+        FEAT["Features Selecionadas"]
+        
+        RAW --> FEAT
+        
+        subgraph FEATURES["Features"]
+            F1["tempo_permanencia"]
+            F2["hora"]
+            F3["dia_semana"]
+            F4["horario_pico"]
+            F5["fim_semana"]
+        end
+        
+        FEAT --> F1 & F2 & F3 & F4 & F5
+    end
+
+    subgraph PREP["⚙️ PREPARAÇÃO"]
+        ENCODE["Label Encoding<br/>curto=0, longo=1"]
+        SCALE["StandardScaler<br/>Normalização"]
+        SPLIT["Train/Test Split<br/>80% / 20%"]
+        
+        F1 & F2 & F3 & F4 & F5 --> SCALE
+        SCALE --> SPLIT
+    end
+
+    subgraph TREINO["🎯 TREINAMENTO"]
+        DT["Decision Tree<br/>max_depth=5"]
+        RF["Random Forest<br/>n_estimators=100"]
+        CV["Cross Validation<br/>5-fold"]
+        
+        SPLIT -->|"X_train, y_train"| DT
+        SPLIT -->|"X_train, y_train"| RF
+        DT --> CV
+        RF --> CV
+    end
+
+    subgraph AVALIACAO["📈 AVALIAÇÃO"]
+        METRICS["Métricas"]
+        CM["Matriz de Confusão"]
+        FI["Feature Importance"]
+        
+        subgraph SCORES["Scores"]
+            ACC["Acurácia"]
+            PREC["Precisão"]
+            REC["Recall"]
+            F1S["F1-Score"]
+        end
+        
+        CV --> METRICS
+        METRICS --> ACC & PREC & REC & F1S
+        CV --> CM
+        CV --> FI
+    end
+
+    subgraph DEPLOY["🚀 DEPLOY"]
+        BEST["Seleção Melhor Modelo<br/>Por F1-Score"]
+        PKL["model.pkl<br/>Modelo Serializado"]
+        PRED["Predição em Produção"]
+        
+        METRICS --> BEST
+        BEST --> PKL
+        PKL --> PRED
+    end
+
+    subgraph OUTPUT["📊 OUTPUT"]
+        DASH["Dashboard<br/>Predições Real-time"]
+        PLOTS["Visualizações<br/>confusion_matrix.png<br/>feature_importance.png"]
+        
+        PRED --> DASH
+        CM & FI --> PLOTS
+    end
+
+    %% Estilos
+    style DADOS fill:#E8F5E9
+    style PREP fill:#E3F2FD
+    style TREINO fill:#FFF3E0
+    style AVALIACAO fill:#FCE4EC
+    style DEPLOY fill:#F3E5F5
+    style OUTPUT fill:#E0F7FA
+
+    classDef feature fill:#C8E6C9,stroke:#388E3C
+    classDef model fill:#FFECB3,stroke:#FFA000
+    classDef metric fill:#F8BBD9,stroke:#C2185B
+
+    class F1,F2,F3,F4,F5 feature
+    class DT,RF model
+    class ACC,PREC,REC,F1S metric
