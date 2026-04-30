@@ -1,0 +1,6 @@
+dataset/
+dataset_final/
+cnn_dataset/
+__pycache__/
+.env
+*.zip
