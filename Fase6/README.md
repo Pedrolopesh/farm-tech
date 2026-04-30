@@ -11,6 +11,9 @@
 ## Introdução
 A **FarmTech Solutions** apresenta uma solução inovadora de monitoramento agrícola baseada em Visão Computacional. O objetivo principal deste projeto é realizar a detecção, classificação e monitoramento de vacas e tratores em campo utilizando modelos de aprendizado profundo (Deep Learning). Através da inteligência artificial, buscamos otimizar o manejo animal, o monitoramento de maquinário agrícola e aumentar tanto a segurança quanto a produtividade das operações da fazenda.
 
+## Vídeo de apresentação
+https://www.loom.com/share/a8739b22859840e190919666f648bb77
+
 ## Notebook do Projeto
 Acesse o notebook principal contendo o treinamento, avaliação e inferência dos modelos:
 [EnzoGloria_rm567599_pbl_fase6.ipynb](./EnzoGloria_rm567599_pbl_fase6.ipynb)
